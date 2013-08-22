@@ -3,11 +3,11 @@
 # ----------------------- #
 
 url: http://nutshellworld.herokuapp.com
-title: Nutshell Word
+title: Nutshell World
 subtitle: Blog on noteworthy things.
-author: Tham Yaojin
+author: TYJ
 simple_search: http://google.com/search
-description: Blog, Yaojin Tham, Android Development, Programming, Physics
+description: Blog, Android Development, Programming, Physics, Family, Life
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -69,7 +69,7 @@ github_show_profile_link: true
 github_skip_forks: true
 
 # Twitter
-twitter_user: "@mipsmonsta"
+twitter_user: "mipsmonsta"
 twitter_tweet_button: true
 
 # Google +1
