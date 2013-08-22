@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Nutshell World]]></title>
-  <link href="http://nutshellworld.herokuapp.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Life | Nutshell World]]></title>
+  <link href="http://nutshellworld.herokuapp.com/blog/categories/life/atom.xml" rel="self"/>
   <link href="http://nutshellworld.herokuapp.com/"/>
   <updated>2013-08-22T14:55:10+08:00</updated>
   <id>http://nutshellworld.herokuapp.com/</id>
@@ -50,47 +50,6 @@ person inflicting the &ldquo;damage&rdquo;, psychological bliss ensues.</p>
 
 <p>Now, why would I suddenly broached this subject. Maybe because someone <em>passed</em> my tests of a
 &ldquo;Little People&rdquo;. Haha.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Twitter User Name For Octopress]]></title>
-    <link href="http://nutshellworld.herokuapp.com/blog/2013/08/22/twitter-user-name-for-octopress/"/>
-    <updated>2013-08-22T13:32:00+08:00</updated>
-    <id>http://nutshellworld.herokuapp.com/blog/2013/08/22/twitter-user-name-for-octopress</id>
-    <content type="html"><![CDATA[<p>In the _config.yml file, you can link to twitter under <em>Third Party Setting</em>.
-However I had difficulty when calling rake generate. The latter will complain that the
-token on line 71 is somehow causing parsing errors.</p>
-
-<p>How I solve it is to put my username for twitter between quotes.</p>
-
-<p><code>
-twitter_user: &ldquo;johndoe"<br/>
-twitter_tweet_button: true</p>
-
-<p></code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The Be All]]></title>
-    <link href="http://nutshellworld.herokuapp.com/blog/2013/08/22/the-be-all/"/>
-    <updated>2013-08-22T12:46:00+08:00</updated>
-    <id>http://nutshellworld.herokuapp.com/blog/2013/08/22/the-be-all</id>
-    <content type="html"><![CDATA[<h2>First Post</h2>
-
-<p>What should a first post talks about. Maybe why I am blogging? The short answers is that I was toying with launch a blog using a ruby blogging engine. The long answers is maybe I felt that I need to have a better reflections of my life thus far.</p>
-
-<p>What ever the reason, here is the <em>first post</em>. The one that started it all.</p>
-
-<p>My resolution for my future posts:</p>
-
-<blockquote><ul>
-<li>Informative or <em>value adding</em>.</li>
-<li>Fun.</li>
-<li>True to the heart.</li>
-</ul>
-</blockquote>
 ]]></content>
   </entry>
   
