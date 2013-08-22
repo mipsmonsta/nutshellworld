@@ -5,13 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - Nutshell World</title>
+  <title>Twitter User Name For Octopress - Nutshell World</title>
   <meta name="author" content="Tham Yaojin">
 
   
-  <meta name="description" content="Blog Archive 2013 Twitter User Name For Octopress
-Aug 22 2013 posted in Blogging, Octopress The Be All
-Aug 22 2013 posted in General Recent Posts &hellip;">
+  <meta name="description" content="In the _config.yml file, you can link to twitter under Third Party Setting.
+However I had difficulty when calling rake generate. The latter will &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +19,7 @@ Aug 22 2013 posted in General Recent Posts &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/archives">
+  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/08/22/twitter-user-name-for-octopress">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Nutshell World" type="application/atom+xml">
@@ -66,49 +65,96 @@ Aug 22 2013 posted in General Recent Posts &hellip;">
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Blog Archive</h1>
+    
+      <h1 class="entry-title">Twitter User Name for Octopress</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-22T13:32:00+08:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives">
 
 
+<div class="entry-content"><p>In the _config.yml file, you can link to twitter under <em>Third Party Setting</em>.
+However I had difficulty when calling rake generate. The latter will complain that the
+token on line 71 is somehow causing parsing errors.</p>
 
-  
-  <h2>2013</h2>
+<p>How I solve it is to put my username for twitter between quotes.</p>
 
-<article>
-  
-<h1><a href="/blog/2013/08/22/twitter-user-name-for-octopress/">Twitter User Name For Octopress</a></h1>
-<time datetime="2013-08-22T13:32:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>22</span> <span class='year'>2013</span></time>
+<p><code>
+twitter_user: &ldquo;johndoe"<br/>
+twitter_tweet_button: true</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/blogging/'>Blogging</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/08/22/the-be-all/">The Be All</a></h1>
-<time datetime="2013-08-22T12:46:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>22</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/general/'>General</a></span>
-</footer>
-
-
-</article>
-
+<p></code></p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Tham Yaojin</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-22T13:32:00+08:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/blogging/'>Blogging</a>, <a class='category' href='/blog/categories/octopress/'>Octopress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/08/22/twitter-user-name-for-octopress/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/08/22/twitter-user-name-for-octopress/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/08/22/the-be-all/" title="Previous Post: The Be All">&laquo; The Be All</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
