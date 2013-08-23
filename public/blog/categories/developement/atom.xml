@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Developement | Nutshell World]]></title>
+  <link href="http://nutshellworld.herokuapp.com/blog/categories/developement/atom.xml" rel="self"/>
+  <link href="http://nutshellworld.herokuapp.com/"/>
+  <updated>2013-08-23T12:28:52+08:00</updated>
+  <id>http://nutshellworld.herokuapp.com/</id>
+  <author>
+    <name><![CDATA[TYJ]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Dog Write App - Possible Enhancements]]></title>
+    <link href="http://nutshellworld.herokuapp.com/blog/2013/08/23/dog-write-app-possible-enhancements/"/>
+    <updated>2013-08-23T12:27:00+08:00</updated>
+    <id>http://nutshellworld.herokuapp.com/blog/2013/08/23/dog-write-app-possible-enhancements</id>
+    <content type="html"><![CDATA[<p>I am the developer for a small note taking app called <strong>Dog Writer</strong>. It&rsquo;s allows you to write your thoughts in plain text and sync them to Dropbox .</p>
+
+<p>Now I never thought that anything would be better than text to allow focused writing. <strong>UNTIL</strong> today. It all started with a little dabbling with Octopress. Hail as the blog engine for hackers, it let users type out their blogs in Markdown.</p>
+
+<blockquote><p>Markdown is the new Rich Text format (RTF) equivalent. It allows the writer to effortlessly format their writing without using mouse or ugly TAGS.</p></blockquote>
+
+<p>Very tempted to integrate this function into Dog Writer. It could well be the killer app. Good use of my time?</p>
+
+<p><strong>Update</strong>: Manage to integrate in a markdown preview window.</p>
+
+<p>Other possible enhancements:</p>
+
+<ul>
+<li>save as md</li>
+<li>ads removal</li>
+<li>syntax help</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
