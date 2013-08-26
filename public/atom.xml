@@ -4,7 +4,7 @@
   <title><![CDATA[Nutshell World]]></title>
   <link href="http://nutshellworld.herokuapp.com/atom.xml" rel="self"/>
   <link href="http://nutshellworld.herokuapp.com/"/>
-  <updated>2013-08-23T12:28:52+08:00</updated>
+  <updated>2013-08-26T15:16:57+08:00</updated>
   <id>http://nutshellworld.herokuapp.com/</id>
   <author>
     <name><![CDATA[TYJ]]></name>
@@ -12,6 +12,97 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Stock Market Terms Part 1]]></title>
+    <link href="http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/"/>
+    <updated>2013-08-26T15:13:00+08:00</updated>
+    <id>http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1</id>
+    <content type="html"><![CDATA[<h2>Trying to get a handle on some stock market terms&hellip; here we go</h2>
+
+<ul>
+<li><p>Outstanding shares of its stock, that is shares held by the public outside of its control</p></li>
+<li><p>EBITDA is Earnings Before Interest, Taxes, Depreciation and Amortization and measures
+operating performance of a company before accounting conventions and non-operational
+charges (such as taxes and interest)</p>
+
+<ul>
+<li>Interest Coverage
+
+<ul>
+<li>Gives a good idea if a company is having trouble paying off its
+  interest charges on its debt
+
+<ul>
+<li>Formula is EBITDA / Interest Expense = Interest Coverage</li>
+<li>1.5 times to be subjectively deemed healthy</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Growth stock has potential for continued growth</p></li>
+<li><p>Value stock are underpriced by the market and have potential for an increase
+when the market corrects the price</p></li>
+<li><p>Return on Equity (ROE)</p>
+
+<ul>
+<li>Measure of how efficiently a company uses its assets to produce Earnings
+
+<ul>
+<li>is Net Income divided by Book Value
+
+<ul>
+<li>Flaws:
+
+<ul>
+<li>when companies lowers Book Value by taking on debt</li>
+</ul>
+</li>
+<li>accounting sleight of hand that reduces book value
+
+<ul>
+<li>write-downs
+
+<ul>
+<li>stock buy backs</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Book Value = <strong>Assets &ndash; Liabilities</strong></p>
+
+<ul>
+<li>How much left if a company shutters after selling all assets and settling all debts</li>
+</ul>
+</li>
+<li><p>PEG = P/E /(projected growth in earnings)</p>
+
+<ul>
+<li>For example, a stock with a P/E of 30 and projected earning growth next year of 15% would have a PEG of 2 (30 / 15 = 2).</li>
+<li>its about y-o-y earning Growth</li>
+<li>relies on projections, which may not always be accurate</li>
+</ul>
+</li>
+<li><p>Price to Sale = Market Cap / Revenue or Stock Price / Sales Price Per Share</p>
+
+<ul>
+<li>Useful for evaluating youung companies without historical earnings</li>
+<li>Lower the better</li>
+</ul>
+</li>
+<li><p>Dividend Payout Ratio = Dividents Per Share / Earning per Shares</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Dog Write App - Possible Enhancements]]></title>
