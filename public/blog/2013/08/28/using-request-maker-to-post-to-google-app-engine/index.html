@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Little People - Nutshell World</title>
+  <title>Using Request Maker to Post to Google App Engine - Nutshell World</title>
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="In my mother-tongue language, &ldquo;Little People&rdquo; is pronounced as &ldquo;xiao ren&rdquo;. The meaning is small people
-. It refers to people &hellip;">
+  <meta name="description" content="Request Maker allows you to send GET/POST/GET/PUT/DELETE request to any web url. I was particularly
+interested in its ability to send Post messages &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/08/22/little-people/">
+  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -68,7 +68,7 @@
   
   <header>
     
-      <h1 class="entry-title">Little People</h1>
+      <h1 class="entry-title">Using Request Maker to Post to Google App Engine</h1>
     
     
       <p class="meta">
@@ -84,45 +84,27 @@
   
 
 
-<time datetime="2013-08-22T14:29:00+08:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2013</time>
+<time datetime="2013-08-28T16:07:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>In my mother-tongue language, <strong>&ldquo;Little People&rdquo;</strong> is pronounced as &ldquo;xiao ren&rdquo;. The meaning is small people
-.</p>
+<div class="entry-content"><p><a href="http://www.requestmaker.com">Request Maker</a> allows you to send GET/POST/GET/PUT/DELETE request to any web url. I was particularly
+interested in its ability to send Post messages to my Google App Engine app.</p>
 
-<blockquote><p>It refers to people whom you consider offensive,
-or as some sort of a foil to you. Almost like a nemesis, except that he or she will never
-deserves your respect because of their conniving ways.</p></blockquote>
+<p>For example, if I want to send foo=bar&amp;mad=man as the request body, I just have to typed
+<code>foo=bar&amp;mad=man</code> verbertim into the Request Data form input at request maker.</p>
 
-<h2>My own tests for &ldquo;Little People&rdquo; are when they:</h2>
+<p>However, I had difficulty extracting these key-values at Google App Engine using
+the <code>request.getParameter(&ldquo;foo&rdquo;)</code> code.</p>
 
-<ul>
-<li>dig information to their advantage without regards to your feeling</li>
-<li>talks only about themselves</li>
-<li>complain about work being stressful but still have free time to loiter / take a cigarette break</li>
-<li>do things that hurts friendship</li>
-<li>push work around even when it&rsquo;s clearly within their job scope</li>
-</ul>
+<p>Turns out for it all to work, you need to set the request header&rsquo;s content-type to</p>
 
+<blockquote><p>application/x-www-form-urlencoded; charset=utf-8</p></blockquote>
 
-<h2>So how do ancient chinese handles this?</h2>
-
-<p>They will paste a piece of paper that is shaped like a man or woman onto the back of their
-sandal. The name of their foil will also be written on the paper. Next as you may have
-guessed is to smack the sandal with the figurine paper hard on the ground.</p>
-
-<p>The effect on the foil? Usually negligible. Folklore goes that some may complain of sneezing, which
-they will naturally conclude that someone is scolding them behind their backs. But to the
-person inflicting the &ldquo;damage&rdquo;, psychological bliss ensues.</p>
-
-<p>How does your culture deal with such people?</p>
-
-<p>Now, why would I suddenly broached this subject. Maybe because someone <em>passed</em> my tests of a
-&ldquo;Little People&rdquo;. Haha.</p>
+<p>That helped me and I hope it helps you.</p>
 </div>
 
 
@@ -145,12 +127,12 @@ person inflicting the &ldquo;damage&rdquo;, psychological bliss ensues.</p>
   
 
 
-<time datetime="2013-08-22T14:29:00+08:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2013</time>
+<time datetime="2013-08-28T16:07:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/general/'>General</a>, <a class='category' href='/blog/categories/life/'>Life</a>
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/networking/'>Networking</a>
   
 </span>
 
@@ -159,7 +141,7 @@ person inflicting the &ldquo;damage&rdquo;, psychological bliss ensues.</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/08/22/little-people/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/08/22/little-people/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/" >Tweet</a>
   
   
   
@@ -170,10 +152,8 @@ person inflicting the &ldquo;damage&rdquo;, psychological bliss ensues.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/08/22/twitter-user-name-for-octopress/" title="Previous Post: Twitter User Name For Octopress">&laquo; Twitter User Name For Octopress</a>
+        <a class="basic-alignment left" href="/blog/2013/08/26/stock-market-terms-part-1/" title="Previous Post: Stock Market Terms Part 1">&laquo; Stock Market Terms Part 1</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/08/23/dog-write-app-possible-enhancements/" title="Next Post: Dog Write App - Possible Enhancements">Dog Write App - Possible Enhancements &raquo;</a>
       
     </p>
   </footer>
@@ -277,8 +257,8 @@ person inflicting the &ldquo;damage&rdquo;, psychological bliss ensues.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/08/22/little-people/';
-        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/08/22/little-people/';
+        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/';
+        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/';
         var disqus_script = 'embed.js';
       
     (function () {
