@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Simple JSON Array to string - Nutshell World</title>
+  <title>CSS Jargons - Span Element vs Block Element - Nutshell World</title>
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="Supposed you have the following json array {&ldquo;apple&rdquo;:&ldquo;twelve&rdquo;, &ldquo;banana&rdquo;: &ldquo;three&rdquo;, &ldquo;oranges&rdquo &hellip;">
+  <meta name="description" content="It finally dawn on me that my understanding of &ldquo;span&rdquo; in the context of CSS or markdown has
+nothing to do with &ldquo;length&rdquo;. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/08/28/simple-json-array-to-string/">
+  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/08/28/css-jargons-span-element-vs-block-element/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -67,7 +68,7 @@
   
   <header>
     
-      <h1 class="entry-title">Simple JSON Array to String</h1>
+      <h1 class="entry-title">CSS Jargons - Span Element vs Block Element</h1>
     
     
       <p class="meta">
@@ -83,29 +84,20 @@
   
 
 
-<time datetime="2013-08-28T19:22:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
+<time datetime="2013-08-28T19:48:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Supposed you have the following json array</p>
+<div class="entry-content"><p>It finally <em>dawn</em> on me that my understanding of &ldquo;span&rdquo; in the context of CSS or markdown has
+nothing to do with &ldquo;length&rdquo;. Rather it means that the &ldquo;span&rdquo; element is supposed to be inline with
+other elements. The opposite of a span element is a block element, which is like an element that wants
+to stand alone.</p>
 
-<p><code>{&ldquo;apple&rdquo;:&ldquo;twelve&rdquo;, &ldquo;banana&rdquo;: &ldquo;three&rdquo;, &ldquo;oranges&rdquo;: &ldquo;five&rdquo;}</code>, how do you extract the value
-of &ldquo;oranges&rdquo; i.e. &ldquo;five&rdquo;?</p>
-
-<p>As simple as this sounds, this took me awhile to figure using <a href="http://code.google.com/p/google-gson/">GSON</a>.</p>
-
-<pre><code>JsonElement jelement = new JsonParser().parse(purchaseInfo);                
-result = jelement.getAsJsonObject().get("oranges").getAsString();
-</code></pre>
-
-<p>Now <em>result</em> will contains the string &ldquo;five&rdquo;. That was easy! The above was used in my Google
-App Engine app.</p>
-
-<p>In English, this would be: &ldquo;the array is a json object with the json object of property &#8220;oranges&rdquo;.
-Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value which is &ldquo;five&rdquo;.</p>
+<p>Now I finally understand the difference between <strong>code span</strong> and <strong>code block</strong> while reading the
+<a href="http://daringfireball.net/projects/markdown/syntax">markdown guide</a></p>
 </div>
 
 
@@ -128,12 +120,12 @@ Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value whi
   
 
 
-<time datetime="2013-08-28T19:22:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
+<time datetime="2013-08-28T19:48:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/json/'>JSON</a>
+    <a class='category' href='/blog/categories/css/'>CSS</a>, <a class='category' href='/blog/categories/markdown/'>Markdown</a>
   
 </span>
 
@@ -142,7 +134,7 @@ Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value whi
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/08/28/simple-json-array-to-string/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/08/28/simple-json-array-to-string/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/08/28/css-jargons-span-element-vs-block-element/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/08/28/css-jargons-span-element-vs-block-element/" >Tweet</a>
   
   
   
@@ -153,10 +145,8 @@ Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value whi
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/" title="Previous Post: Using Request Maker to Post to Google App Engine">&laquo; Using Request Maker to Post to Google App Engine</a>
+        <a class="basic-alignment left" href="/blog/2013/08/28/simple-json-array-to-string/" title="Previous Post: Simple JSON Array to string">&laquo; Simple JSON Array to string</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/08/28/css-jargons-span-element-vs-block-element/" title="Next Post: CSS Jargons - Span Element vs Block Element">CSS Jargons - Span Element vs Block Element &raquo;</a>
       
     </p>
   </footer>
@@ -260,8 +250,8 @@ Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value whi
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/08/28/simple-json-array-to-string/';
-        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/08/28/simple-json-array-to-string/';
+        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/08/28/css-jargons-span-element-vs-block-element/';
+        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/08/28/css-jargons-span-element-vs-block-element/';
         var disqus_script = 'embed.js';
       
     (function () {
