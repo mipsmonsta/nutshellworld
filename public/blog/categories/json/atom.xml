@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: JSON | Nutshell World]]></title>
+  <link href="http://nutshellworld.herokuapp.com/blog/categories/json/atom.xml" rel="self"/>
+  <link href="http://nutshellworld.herokuapp.com/"/>
+  <updated>2013-08-28T19:43:20+08:00</updated>
+  <id>http://nutshellworld.herokuapp.com/</id>
+  <author>
+    <name><![CDATA[TYJ]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Simple JSON Array to string]]></title>
+    <link href="http://nutshellworld.herokuapp.com/blog/2013/08/28/simple-json-array-to-string/"/>
+    <updated>2013-08-28T19:22:00+08:00</updated>
+    <id>http://nutshellworld.herokuapp.com/blog/2013/08/28/simple-json-array-to-string</id>
+    <content type="html"><![CDATA[<p>Supposed you have the following json array</p>
+
+<p><code>{&ldquo;apple&rdquo;:&ldquo;twelve&rdquo;, &ldquo;banana&rdquo;: &ldquo;three&rdquo;, &ldquo;oranges&rdquo;: &ldquo;five&rdquo;}</code>, how do you extract the value
+of &ldquo;oranges&rdquo; i.e. &ldquo;five&rdquo;?</p>
+
+<p>As simple as this sounds, this took me awhile to figure using <a href="http://code.google.com/p/google-gson/">GSON</a>.</p>
+
+<pre><code>JsonElement jelement = new JsonParser().parse(purchaseInfo);                
+result = jelement.getAsJsonObject().get("oranges").getAsString();
+</code></pre>
+
+<p>Now <em>result</em> will contains the string &ldquo;five&rdquo;. That was easy! The above was used in my Google
+App Engine app.</p>
+
+<p>In English, this would be: &ldquo;the array is a json object with the json object of property "oranges&rdquo;.
+Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value which is &ldquo;five&rdquo;.</p>
+]]></content>
+  </entry>
+  
+</feed>
