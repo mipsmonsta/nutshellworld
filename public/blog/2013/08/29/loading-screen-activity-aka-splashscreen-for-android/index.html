@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Stock Market Terms Part 1 - Nutshell World</title>
+  <title>Loading Screen Activity (AKA) SplashScreen for Android - Nutshell World</title>
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="Trying to get a handle on some stock market terms&hellip; here we go Outstanding shares of its stock, that is shares held by the public outside of &hellip;">
+  <meta name="description" content="I was dabbling with implement In App Purchase (IAB) for my Android app. According to Google documentation,
+it would be best to change the UI &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/">
+  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -67,7 +68,7 @@
   
   <header>
     
-      <h1 class="entry-title">Stock Market Terms Part 1</h1>
+      <h1 class="entry-title">Loading Screen Activity (AKA) SplashScreen for Android</h1>
     
     
       <p class="meta">
@@ -83,96 +84,55 @@
   
 
 
-<time datetime="2013-08-26T15:13:00+08:00" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
+<time datetime="2013-08-29T17:16:00+08:00" pubdate data-updated="true">Aug 29<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>Trying to get a handle on some stock market terms&hellip; here we go</h2>
+<div class="entry-content"><p>I was dabbling with implement <em>In App Purchase (IAB)</em>  for my Android app. According to Google documentation,
+it would be best to change the UI instantly once the purchase was successful. However, this is not possible
+for my app unless after a restart.</p>
+
+<p>The documentation also advised to do a server query for the purchased item status every so often, preferably
+everytime the app is started.</p>
+
+<p>How I implemented my part of my app&rsquo;s IAB workflow is as such:</p>
+
+<ol>
+<li>User makes the purchase, but the UI of the app will only update after the next app&rsquo;s start up.</li>
+<li>If the User download the app on his other devices for the first time, app will need to check for his
+purchases before going into the main UI.</li>
+</ol>
+
+
+<p>The above use cases led me to implement a splash screen activity that will always run before my main UI activity.
+However I have some optimizing to shorten the on screen time of this splash screen. After all, who likes to wait?</p>
+
+<p>Some of the design choices to cut waiting time are:</p>
 
 <ul>
-<li><p>Outstanding shares of its stock, that is shares held by the public outside of its control</p></li>
-<li><p>EBITDA is Earnings Before Interest, Taxes, Depreciation and Amortization and measures
-operating performance of a company before accounting conventions and non-operational
-charges (such as taxes and interest)</p>
+<li>When the purchase transaction first came through, I would set a flag in the app to note this event.</li>
+<li>Then I forced the app to shutdown and prompt the user to <em>restart</em> the app with a Toast message.</li>
+<li>At the next start-up, the splash screen <code>onCreate()</code> code will check for the presence of the flag.
 
 <ul>
-<li>Interest Coverage
+<li>If the flag exists, the splashscreen quickly starts the main UI activity.</li>
+<li>If not, this start-up could be the first start up on a device that newly install the app.
 
 <ul>
-<li>Gives a good idea if a company is having trouble paying off its
-  interest charges on its debt
-
-<ul>
-<li>Formula is EBITDA / Interest Expense = Interest Coverage</li>
-<li>1.5 times to be subjectively deemed healthy</li>
+<li>So the splashscreen activity will check with Google Play Services for any purchases. In this case
+the splash screen may dwell longer on the screen becauses of server calls.</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-</li>
-<li><p>Growth stock has potential for continued growth</p></li>
-<li><p>Value stock are underpriced by the market and have potential for an increase
-when the market corrects the price</p></li>
-<li><p>Return on Equity (ROE)</p>
 
-<ul>
-<li>Measure of how efficiently a company uses its assets to produce Earnings
 
-<ul>
-<li>is Net Income divided by Book Value
-
-<ul>
-<li>Flaws:
-
-<ul>
-<li>when companies lowers Book Value by taking on debt</li>
-</ul>
-</li>
-<li>accounting sleight of hand that reduces book value
-
-<ul>
-<li>write-downs
-
-<ul>
-<li>stock buy backs</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Book Value = <strong>Assets &ndash; Liabilities</strong></p>
-
-<ul>
-<li>How much left if a company shutters after selling all assets and settling all debts</li>
-</ul>
-</li>
-<li><p>PEG = P/E /(projected growth in earnings)</p>
-
-<ul>
-<li>For example, a stock with a P/E of 30 and projected earning growth next year of 15% would have a PEG of 2 (30 / 15 = 2).</li>
-<li>its about y-o-y earning Growth</li>
-<li>relies on projections, which may not always be accurate</li>
-</ul>
-</li>
-<li><p>Price to Sale = Market Cap / Revenue or Stock Price / Sales Price Per Share</p>
-
-<ul>
-<li>Useful for evaluating youung companies without historical earnings</li>
-<li>Lower the better</li>
-</ul>
-</li>
-<li><p>Dividend Payout Ratio = Dividents Per Share / Earning per Shares</p></li>
-</ul>
-
+<p>To make the splash screen as unintrusive as possible, I also styled the activity using the
+<code>android:theme="@android:style/Theme.Dialog</code> in the application manifest.</p>
 </div>
 
 
@@ -195,12 +155,12 @@ when the market corrects the price</p></li>
   
 
 
-<time datetime="2013-08-26T15:13:00+08:00" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
+<time datetime="2013-08-29T17:16:00+08:00" pubdate data-updated="true">Aug 29<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/equity/'>Equity</a>, <a class='category' href='/blog/categories/finance/'>Finance</a>
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/development/'>Development</a>
   
 </span>
 
@@ -209,7 +169,7 @@ when the market corrects the price</p></li>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/" >Tweet</a>
   
   
   
@@ -220,10 +180,8 @@ when the market corrects the price</p></li>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/08/23/dog-write-app-possible-enhancements/" title="Previous Post: Dog Write App - Possible Enhancements">&laquo; Dog Write App - Possible Enhancements</a>
+        <a class="basic-alignment left" href="/blog/2013/08/28/css-jargons-span-element-vs-block-element/" title="Previous Post: CSS Jargons - Span Element vs Block Element">&laquo; CSS Jargons - Span Element vs Block Element</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/" title="Next Post: Using Request Maker to Post to Google App Engine">Using Request Maker to Post to Google App Engine &raquo;</a>
       
     </p>
   </footer>
@@ -327,8 +285,8 @@ when the market corrects the price</p></li>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/';
-        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/';
+        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/';
+        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/';
         var disqus_script = 'embed.js';
       
     (function () {
