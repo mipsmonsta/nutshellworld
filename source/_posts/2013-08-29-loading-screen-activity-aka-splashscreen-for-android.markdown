@@ -5,7 +5,7 @@ date: 2013-08-29 17:16
 comments: true
 categories: Android Development
 ---
-I was dabbling with implement *In App Purchase (IAB)*  for my Android app. According to Google documentation,
+I was dabbling with implementing *In App Purchase (IAB)*  for my Android app. According to Google documentation,
 it would be best to change the UI instantly once the purchase was successful. However, this is not possible
 for my app unless after a restart.
 
