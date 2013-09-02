@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Graphics | Nutshell World]]></title>
+  <link href="http://nutshellworld.herokuapp.com/blog/categories/graphics/atom.xml" rel="self"/>
+  <link href="http://nutshellworld.herokuapp.com/"/>
+  <updated>2013-09-02T10:42:53+08:00</updated>
+  <id>http://nutshellworld.herokuapp.com/</id>
+  <author>
+    <name><![CDATA[TYJ]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Image DPI and Android]]></title>
+    <link href="http://nutshellworld.herokuapp.com/blog/2013/09/02/image-dpi-and-android/"/>
+    <updated>2013-09-02T10:22:00+08:00</updated>
+    <id>http://nutshellworld.herokuapp.com/blog/2013/09/02/image-dpi-and-android</id>
+    <content type="html"><![CDATA[<p>Android developer documents states that the baseline screen density is taken to be 160 pixels (px) per
+inch. If your device has 240 px per inch (high density), a image of size 100px by 100px will appear larger on the baseline
+baseline screen than the high density screen. Specially, the image will be 0.625 of an inch on baseline screen compared to
+0.416 inch on the higher density screen.</p>
+
+<p>Then how does <em>image dpi</em> relates to how Android serves up the image. The answer as I have researched is <strong>NOTHING</strong>.
+Turns out the image dpi has no bearing on how large the images are displayed on the computer or cellphone screen.
+It does however specify how large these images are printed on paper. For example, two images of 100px by 100px but at different
+dpi of 200 dpi and 100 dpi will look the same size on the same cellphone screen. However, when printed,
+the one with the higher dpi will print as half the dimension as the other.</p>
+
+<p>You can refer to this <a href="http://www.scantips.com/no72dpi.html">scantips</a> for more on image dpi.</p>
+
+<p>For us Android developers, we just have to stop worrying about image dpi. If only we
+can do the same for screen density&hellip;lol.</p>
+]]></content>
+  </entry>
+  
+</feed>

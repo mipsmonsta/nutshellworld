@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Developement - Nutshell World</title>
+  <title>Image DPI and Android - Nutshell World</title>
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="Category: Developement">
+  <meta name="description" content="Android developer documents states that the baseline screen density is taken to be 160 pixels (px) per
+inch. If your device has 240 px per inch (high &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nutshellworld.herokuapp.comblog/categories/developement/">
+  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/09/02/image-dpi-and-android/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -63,36 +64,107 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Developement</h1>
+    
+      <h1 class="entry-title">Image DPI and Android</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-02T10:22:00+08:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Android developer documents states that the baseline screen density is taken to be 160 pixels (px) per
+inch. If your device has 240 px per inch (high density), a image of size 100px by 100px will appear larger on the baseline
+baseline screen than the high density screen. Specially, the image will be 0.625 of an inch on baseline screen compared to
+0.416 inch on the higher density screen.</p>
 
-  
-  <h2>2013</h2>
+<p>Then how does <em>image dpi</em> relates to how Android serves up the image. The answer as I have researched is <strong>NOTHING</strong>.
+Turns out the image dpi has no bearing on how large the images are displayed on the computer or cellphone screen.
+It does however specify how large these images are printed on paper. For example, two images of 100px by 100px but at different
+dpi of 200 dpi and 100 dpi will look the same size on the same cellphone screen. However, when printed,
+the one with the higher dpi will print as half the dimension as the other.</p>
 
-<article>
-  
-<h1><a href="/blog/2013/08/23/dog-write-app-possible-enhancements/">Dog Write App - Possible Enhancements</a></h1>
-<time datetime="2013-08-23T12:27:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>23</span> <span class='year'>2013</span></time>
+<p>You can refer to this <a href="http://www.scantips.com/no72dpi.html">scantips</a> for more on image dpi.</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/developement/'>Developement</a></span>
-</footer>
-
-
-</article>
-
+<p>For us Android developers, we just have to stop worrying about image dpi. If only we
+can do the same for screen density&hellip;lol.</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">TYJ</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-02T10:22:00+08:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/graphics/'>Graphics</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/09/02/image-dpi-and-android/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/09/02/image-dpi-and-android/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/" title="Previous Post: Loading Screen Activity (AKA) SplashScreen for Android">&laquo; Loading Screen Activity (AKA) SplashScreen for Android</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -185,7 +257,10 @@
       var disqus_shortname = 'nutshellworld';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/09/02/image-dpi-and-android/';
+        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/09/02/image-dpi-and-android/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
