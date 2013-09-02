@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Stock Market Terms Part 1 - Nutshell World</title>
+  <title>ObjectAnimator and their use - Nutshell World</title>
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="Trying to get a handle on some stock market terms&hellip; here we go Outstanding shares of its stock, that is shares held by the public outside of &hellip;">
+  <meta name="description" content="History Object animator was added in Android API 11 (Honeycomb i.e. 3.0). This class allows targeting objects (views or fragmentInstance.getView()) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/">
+  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/09/02/objectanimator-and-their-use/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -67,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Stock Market Terms Part 1</h1>
+      <h1 class="entry-title">ObjectAnimator and Their Use</h1>
     
     
       <p class="meta">
@@ -83,96 +83,136 @@
   
 
 
-<time datetime="2013-08-26T15:13:00+08:00" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
+<time datetime="2013-09-02T12:44:00+08:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h2>Trying to get a handle on some stock market terms&hellip; here we go</h2>
+<div class="entry-content"><h2>History</h2>
+
+<p>Object animator was added in Android API 11 (Honeycomb i.e. 3.0). This class allows <em>targeting</em> objects (views or fragmentInstance.getView())
+and animating their properties.</p>
+
+<h2>Use</h2>
+
+<pre><code>ObjectAnimator movingFragmentAnimator = ObjectAnimator.
+            ofPropertyValuesHolder(&lt;target&gt;, &lt;PropertyValuesHolder value&gt;, &lt;PropertyValuesHolder value&gt;, ...);
+</code></pre>
+
+<p>Here you can see a static constructor that takes in <em>list</em> of PropertyValuesHolder values all
+targeting the same view object.</p>
+
+<p><strong>OR</strong></p>
+
+<pre><code>ObjectAnimator darkHoverViewAnimator = ObjectAnimator.
+            ofFloat(mDarkHoverView, "alpha", 0.0f, 0.5f);
+</code></pre>
+
+<p>Only one property of the target is to be animated here.</p>
+
+<h2>PropertyValuesHolder</h2>
+
+<pre><code>PropertyValuesHolder rotateX =  PropertyValuesHolder.ofFloat("rotationX", 40f);
+</code></pre>
+
+<p>Here you can see that <strong>rotationX</strong> is the property value to change and &ldquo;40f&rdquo; is the degree to turn about the x-axis.</p>
+
+<h2>Tweaking Object Animator further <a id="tweaks"></a></h2>
+
+<p>Duration of the animation can be changed:</p>
+
+<pre><code>darkHoverViewAnimator.setDuration(long millisec)
+</code></pre>
+
+<p><strong>Default</strong> duration is 300 msec according to documentation.</p>
+
+<p>How about starting animation with a delay:</p>
+
+<pre><code>darkHoverViewAnimator.startDelay(long millisec)
+</code></pre>
+
+<h2>Starting animation of an Object animator</h2>
+
+<pre><code>darkHoverViewAnimator.start()
+</code></pre>
+
+<h2>Starting animation of multiple Object Animators</h2>
+
+<p>We achieve this by using a <em>AnimatorSet</em> instance instead of calling individual objectanimator&rsquo;s start().</p>
+
+<pre><code>  AnimatorSet s = new AnimatorSet();
+  s.playTogether(movingFragmentAnimator, darkHoverViewAnimator, movingFragmentRotator);
+  s.addListener(listener); 
+  s.start();
+</code></pre>
+
+<p>The animatorset allows the simultaneous playback of all animator&rsquo;s animation. When each object(target) starts their animation
+depends of course on whether their startDelay property has been <a href="#tweaks">set</a>.</p>
+
+<h2>Chaining even more animations to start after</h2>
+
+<p>Notice the line <code>s.addListener(listener)</code>? The class of the listener in this case is <strong>Animator.AnimatorListener</strong>.
+An instance of this AnimatorListener allows the overriding of four methods that corresponds to
+specific instance of the animator&rsquo;s lifecycle.</p>
+
+<pre><code>    AnimatorListener listener = new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator arg0) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.slide_fragment_in, 0, 0,
+                        R.animator.slide_fragment_out);
+                transaction.add(R.id.move_to_back_container, mTextFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        };
+</code></pre>
+
+<p>We are only overriding the <em>onAnimationEnd</em>. There are other lifecycle events that we can also tracked:</p>
 
 <ul>
-<li><p>Outstanding shares of its stock, that is shares held by the public outside of its control</p></li>
-<li><p>EBITDA is Earnings Before Interest, Taxes, Depreciation and Amortization and measures
-operating performance of a company before accounting conventions and non-operational
-charges (such as taxes and interest)</p>
-
-<ul>
-<li>Interest Coverage
-
-<ul>
-<li>Gives a good idea if a company is having trouble paying off its
-  interest charges on its debt
-
-<ul>
-<li>Formula is EBITDA / Interest Expense = Interest Coverage</li>
-<li>1.5 times to be subjectively deemed healthy</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Growth stock has potential for continued growth</p></li>
-<li><p>Value stock are underpriced by the market and have potential for an increase
-when the market corrects the price</p></li>
-<li><p>Return on Equity (ROE)</p>
-
-<ul>
-<li>Measure of how efficiently a company uses its assets to produce Earnings
-
-<ul>
-<li>is Net Income divided by Book Value
-
-<ul>
-<li>Flaws:
-
-<ul>
-<li>when companies lowers Book Value by taking on debt</li>
-</ul>
-</li>
-<li>accounting sleight of hand that reduces book value
-
-<ul>
-<li>write-downs
-
-<ul>
-<li>stock buy backs</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Book Value = <strong>Assets &ndash; Liabilities</strong></p>
-
-<ul>
-<li>How much left if a company shutters after selling all assets and settling all debts</li>
-</ul>
-</li>
-<li><p>PEG = P/E /(projected growth in earnings)</p>
-
-<ul>
-<li>For example, a stock with a P/E of 30 and projected earning growth next year of 15% would have a PEG of 2 (30 / 15 = 2).</li>
-<li>its about y-o-y earning Growth</li>
-<li>relies on projections, which may not always be accurate</li>
-</ul>
-</li>
-<li><p>Price to Sale = Market Cap / Revenue or Stock Price / Sales Price Per Share</p>
-
-<ul>
-<li>Useful for evaluating youung companies without historical earnings</li>
-<li>Lower the better</li>
-</ul>
-</li>
-<li><p>Dividend Payout Ratio = Dividents Per Share / Earning per Shares</p></li>
+<li>onAnimationCancel</li>
+<li>onAnimationStart</li>
+<li>onAnimationRepeat</li>
 </ul>
 
+
+<p>See <a href="http://developer.android.com/reference/android/animation/Animator.AnimatorListener.html">documentation for AnimatorListener to find out more</a>.</p>
+
+<p>In the above code, we will add a fragment in at the end of AnimatorSet&rsquo;s animation. Interestingly,
+doc for FragmentTransaction says</p>
+
+<blockquote><p>abstract FragmentTransaction  <br/>
+setCustomAnimations(int enter, int exit, int popEnter, int popExit)
+<em>Desc:</em> Set specific animation resources to run for the fragments that are entering and exiting in this transaction.</p></blockquote>
+
+<p>This means that mTextFragment will &ldquo;enter&rdquo; and &ldquo;pop out&rdquo; with the specified animation resource ids.
+I suspect &ldquo;popEnter&rdquo; refers to the animation for the fragment beneath mTextFragment when it pops up.
+We of course set this animation resource id to <em>&ldquo;zero&rdquo;</em>, indicating no animation at all.</p>
+
+<h2>Specifying Object Animator in XML in lieu of code</h2>
+
+<pre><code>&lt;objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:valueFrom="0"
+    android:valueTo="@dimen/slide_up_down_fraction"
+    android:propertyName="yFraction"
+    android:valueType="floatType"
+    android:duration="@integer/slide_up_down_duration"&gt;
+&lt;/objectAnimator&gt;
+</code></pre>
+
+<p>The xml objectAnimator file will go under the &ldquo;animator&rdquo; folder. It&rsquo;s resource identifier will be
+R.animator.&lt;name_of_file>.</p>
+
+<h2>Summary</h2>
+
+<p>We saw how to use the following objects together or in partial isolation to achieve useful animations:
++ PropertyValuesHolder
++ ObjectAnimator
++ AnimatorSet
++ AnimatorListener.</p>
 </div>
 
 
@@ -195,12 +235,12 @@ when the market corrects the price</p></li>
   
 
 
-<time datetime="2013-08-26T15:13:00+08:00" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
+<time datetime="2013-09-02T12:44:00+08:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/equity/'>Equity</a>, <a class='category' href='/blog/categories/finance/'>Finance</a>
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/animation/'>Animation</a>, <a class='category' href='/blog/categories/development/'>Development</a>
   
 </span>
 
@@ -209,7 +249,7 @@ when the market corrects the price</p></li>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/09/02/objectanimator-and-their-use/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/09/02/objectanimator-and-their-use/" >Tweet</a>
   
   
   
@@ -220,10 +260,8 @@ when the market corrects the price</p></li>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/08/23/dog-write-app-possible-enhancements/" title="Previous Post: Dog Write App - Possible Enhancements">&laquo; Dog Write App - Possible Enhancements</a>
+        <a class="basic-alignment left" href="/blog/2013/09/02/git-simple-guide/" title="Previous Post: Git Simple Guide">&laquo; Git Simple Guide</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/" title="Next Post: Using Request Maker to Post to Google App Engine">Using Request Maker to Post to Google App Engine &raquo;</a>
       
     </p>
   </footer>
@@ -336,8 +374,8 @@ when the market corrects the price</p></li>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/';
-        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/08/26/stock-market-terms-part-1/';
+        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/09/02/objectanimator-and-their-use/';
+        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/09/02/objectanimator-and-their-use/';
         var disqus_script = 'embed.js';
       
     (function () {

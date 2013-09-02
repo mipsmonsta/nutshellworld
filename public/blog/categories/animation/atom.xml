@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Development | Nutshell World]]></title>
-  <link href="http://nutshellworld.herokuapp.com/blog/categories/development/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Animation | Nutshell World]]></title>
+  <link href="http://nutshellworld.herokuapp.com/blog/categories/animation/atom.xml" rel="self"/>
   <link href="http://nutshellworld.herokuapp.com/"/>
   <updated>2013-09-02T14:01:31+08:00</updated>
   <id>http://nutshellworld.herokuapp.com/</id>
@@ -141,56 +141,6 @@ R.animator.&lt;name_of_file>.</p>
 + ObjectAnimator
 + AnimatorSet
 + AnimatorListener.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Loading Screen Activity (AKA) SplashScreen for Android]]></title>
-    <link href="http://nutshellworld.herokuapp.com/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/"/>
-    <updated>2013-08-29T17:16:00+08:00</updated>
-    <id>http://nutshellworld.herokuapp.com/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android</id>
-    <content type="html"><![CDATA[<p>I was dabbling with implementing <em>In App Purchase (IAB)</em>  for my Android app. According to Google documentation,
-it would be best to change the UI instantly once the purchase was successful. However, this is not possible
-for my app unless after a restart.</p>
-
-<p>The documentation also advised to do a server query for the purchased item status every so often, preferably
-everytime the app is started.</p>
-
-<p>How I implemented my part of my app&rsquo;s IAB workflow is as such:</p>
-
-<ol>
-<li>User makes the purchase, but the UI of the app will only update after the next app&rsquo;s start up.</li>
-<li>If the User download the app on his other devices for the first time, app will need to check for his
-purchases before going into the main UI.</li>
-</ol>
-
-
-<p>The above use cases led me to implement a splash screen activity that will always run before my main UI activity.
-However I have some optimizing to shorten the on screen time of this splash screen. After all, who likes to wait?</p>
-
-<p>Some of the design choices to cut waiting time are:</p>
-
-<ul>
-<li>When the purchase transaction first came through, I would set a flag in the app to note this event.</li>
-<li>Then I forced the app to shutdown and prompt the user to <em>restart</em> the app with a Toast message.</li>
-<li>At the next start-up, the splash screen <code>onCreate()</code> code will check for the presence of the flag.
-
-<ul>
-<li>If the flag exists, the splashscreen quickly starts the main UI activity.</li>
-<li>If not, this start-up could be the first start up on a device that newly install the app.
-
-<ul>
-<li>So the splashscreen activity will check with Google Play Services for any purchases. In this case
-the splash screen may dwell longer on the screen becauses of server calls.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>To make the splash screen as unintrusive as possible, I also styled the activity using the
-<code>android:theme="@android:style/Theme.Dialog</code> in the application manifest.</p>
 ]]></content>
   </entry>
   
