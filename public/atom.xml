@@ -4,7 +4,7 @@
   <title><![CDATA[Nutshell World]]></title>
   <link href="http://nutshellworld.herokuapp.com/atom.xml" rel="self"/>
   <link href="http://nutshellworld.herokuapp.com/"/>
-  <updated>2013-09-02T11:19:59+08:00</updated>
+  <updated>2013-09-02T12:03:41+08:00</updated>
   <id>http://nutshellworld.herokuapp.com/</id>
   <author>
     <name><![CDATA[TYJ]]></name>
@@ -12,6 +12,16 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Git Simple Guide]]></title>
+    <link href="http://nutshellworld.herokuapp.com/blog/2013/09/02/git-simple-guide/"/>
+    <updated>2013-09-02T12:01:00+08:00</updated>
+    <id>http://nutshellworld.herokuapp.com/blog/2013/09/02/git-simple-guide</id>
+    <content type="html"><![CDATA[<p>As the title of this post says: <a href="http://rogerdudler.github.io/git-guide/">Simple Guide to Git</a>.
+Good reference in a visually beautiful way.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Image DPI and Android]]></title>
