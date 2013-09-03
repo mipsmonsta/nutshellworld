@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Nutshell World]]></title>
   <link href="http://nutshellworld.herokuapp.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://nutshellworld.herokuapp.com/"/>
-  <updated>2013-09-02T14:01:31+08:00</updated>
+  <updated>2013-09-03T14:56:39+08:00</updated>
   <id>http://nutshellworld.herokuapp.com/</id>
   <author>
     <name><![CDATA[TYJ]]></name>
@@ -12,6 +12,106 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Using the ViewPager - Essence]]></title>
+    <link href="http://nutshellworld.herokuapp.com/blog/2013/09/03/using-the-viewpager-essence/"/>
+    <updated>2013-09-03T13:59:00+08:00</updated>
+    <id>http://nutshellworld.herokuapp.com/blog/2013/09/03/using-the-viewpager-essence</id>
+    <content type="html"><![CDATA[<p>For one of the project that I am currently working on, I plan to use the viewpager to swipe to
+&ldquo;pages&rdquo; of fragment. The key steps are planned below for implementation.</p>
+
+<h2>Set-up Host Activity&rsquo;s Layout</h2>
+
+<p>The layout file needs to include a xml viewpager. Notice this is available in the support library.
+The viewpager is also occupying the full screen except for the status bar chrome.</p>
+
+<pre><code>&lt;android.support.v4.view.ViewPager
+ android:id="@+id/viewpager"
+ android:layout_width="fill_parent"
+ android:layout_height="fill_parent" /&gt;
+</code></pre>
+
+<h2>Changes to Host Activity</h2>
+
+<p>The host activity would need to be inherited from FragmentActivity (I take it because of the use
+of the support library).</p>
+
+<p>This activity will also need to hold on to an instance of a subclassed PageAdapter. In the
+<code>onCreate(Bundle savedInstanceState)</code>, we can find the viewpager from the activity&rsquo;s layout and
+then set the adapter to the instance of PageAdapter.</p>
+
+<pre><code>...
+ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+List&lt;Fragment&gt; fragments = getFragments();
+pageAdapter = new SubClassdPageAdapter(getSupportFragmentManager(), fragments);
+pager.setAdapter(pageAdapter);
+</code></pre>
+
+<p><a href id="getFragments"></a>
+Notice the instantization of the pageAdapter included steps to feed it the supportFragmentManager and a
+list of fragments that each will be the &ldquo;page&rdquo;.</p>
+
+<h2>Declaration of the Subclassed Page Adapter</h2>
+
+<pre><code>class SubClassedPageAdapter extends FragmentPagerAdapter {
+
+    private List&lt;Fragment&gt; fragments;
+
+    public SubClassedPageAdapter(FragmentManager fm, List&lt;Fragment&gt; fragments)
+    {
+        super(fm);
+        this.fragments = fragments;
+    }
+
+    @Override
+    public Fragment getItem(int position)
+    {
+        return this.fragments.get(position);
+    }
+
+    public int getCount()
+    {
+        return fragments.size();
+    }
+
+}
+</code></pre>
+
+<p>The focus to note is the contructor which takes in the support fragment manager and a list of fragments.
+The other things to note are the <code>getItem(int position)</code> and <code>getCount()</code> since these are abstract
+to begin with. The job of the PagerAdapter is just to act as the intermediary to return the
+right fragments to the viewpager.</p>
+
+<h2>&ldquo;Flow&rdquo; of fragments</h2>
+
+<p>ViewPager &lt;&mdash;&mdash;(right fragment)&mdash;&mdash;PageAdapter&lt;&mdash;&mdash;-List of Fragments</p>
+
+<h2>Relationships</h2>
+
+<p>+ViewPager has an adapter of PageAdapter.
++PageAdapter contains a list of fragments.</p>
+
+<h2>Getting the list of Fragments</h2>
+
+<p>Recall the <code>getFragments()</code> <a href="#getFragments">function</a> call in the main activity in <code>onCreate</code>?
+We just need to implement it to have our working viewpager workflow.</p>
+
+<pre><code>...in main activity's code
+List&lt;Fragment&gt; getFragments()
+{
+    List&lt;Fragment&gt; result = new ArrayList&lt;Fragment&gt;();
+
+    Fragment frag1 = Fragment.newInstance();
+    result.add(frag1);
+    Fragment frag2 = Fragment.newInstance();
+    result.add(frag2);
+}
+</code></pre>
+
+<p>The final bit is to integrate with actionBar tabs. But I should leave it as the next post to talk about tabs.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ObjectAnimator and their use]]></title>
