@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Development | Nutshell World]]></title>
   <link href="http://nutshellworld.herokuapp.com/blog/categories/development/atom.xml" rel="self"/>
   <link href="http://nutshellworld.herokuapp.com/"/>
-  <updated>2013-09-03T14:56:39+08:00</updated>
+  <updated>2013-09-03T16:28:52+08:00</updated>
   <id>http://nutshellworld.herokuapp.com/</id>
   <author>
     <name><![CDATA[TYJ]]></name>
@@ -12,6 +12,78 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Android Action Bar Tab - How to + ViewPager Integration]]></title>
+    <link href="http://nutshellworld.herokuapp.com/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/"/>
+    <updated>2013-09-03T15:07:00+08:00</updated>
+    <id>http://nutshellworld.herokuapp.com/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration</id>
+    <content type="html"><![CDATA[<p>Now tabs are just UI pieces. It can be added by interacting with three components
+1. ActionBar.TabListener
+2. ActionBar itself
+3. ActionBar.newTab() &hellip;. okay this is more like a method, I concede.</p>
+
+<p>The implementation patterns are as such:</p>
+
+<p>in <code>onCreate(Bundle savedInstanceState)</code></p>
+
+<pre><code>final ActionBar actionBar = getActionBar();
+
+//set the navigation mode of actionbar to
+actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
+
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+}
+
+actionBar.addTab(actionBar.newTab().setText("Tab1").setTabListener(tabListener));
+</code></pre>
+
+<p>For more tabs, add in more <code>addTab</code> function calls for ActionBar.</p>
+
+<h2>Relationships</h2>
+
+<blockquote><p>ActionBar is set to NAVIGATION_MODE_TABS and has
+ActionBar.Tabs whom in turns are associated with TabListerner.</p></blockquote>
+
+<h2>Viewpager Integration</h2>
+
+<p>In my last <a href="/blog/2013/09/03/using-the-viewpager-essence/">post</a>, we talked about viewpager.
+If you read it up, you will see that there is no UI to select the page to show using. Let&rsquo;s correct that now.</p>
+
+<p>We just have to modify the TabListerner code above as follows:</p>
+
+<pre><code>...
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
+
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+...
+</code></pre>
+
+<p><code>setCurrentItem</code> accepts <code>int position</code> as inputs which the tab offers. Almost like a match made in
+heaven or they are simply meant to be used together to create great apps.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Using the ViewPager - Essence]]></title>
@@ -109,7 +181,7 @@ List&lt;Fragment&gt; getFragments()
 }
 </code></pre>
 
-<p>The final bit is to integrate with actionBar tabs. But I should leave it as the next post to talk about tabs.</p>
+<p>The final bit is to integrate with actionBar tabs. But I should leave it as part of the next post to talk about tabs.</p>
 ]]></content>
   </entry>
   

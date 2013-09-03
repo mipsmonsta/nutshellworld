@@ -97,4 +97,5 @@ We just need to implement it to have our working viewpager workflow.
 		result.add(frag2);
 	}
 	
-The final bit is to integrate with actionBar tabs. But I should leave it as the next post to talk about tabs.
+The final bit is to integrate with actionBar tabs. But I should leave it as part of the next post to talk about tabs.
+ 

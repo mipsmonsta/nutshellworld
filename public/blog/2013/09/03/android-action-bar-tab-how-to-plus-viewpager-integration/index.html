@@ -5,11 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Dog Write App - Possible Enhancements - Nutshell World</title>
+  <title>Android Action Bar Tab - How to + ViewPager Integration - Nutshell World</title>
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="I am the developer for a small note taking app called Dog Writer. It&rsquo;s allows you to write your thoughts in plain text and sync them to Dropbox &hellip;">
+  <meta name="description" content="Now tabs are just UI pieces. It can be added by interacting with three components
+1. ActionBar.TabListener
+2. ActionBar itself
+3. ActionBar.newTab &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/08/23/dog-write-app-possible-enhancements/">
+  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -67,7 +70,7 @@
   
   <header>
     
-      <h1 class="entry-title">Dog Write App - Possible Enhancements</h1>
+      <h1 class="entry-title">Android Action Bar Tab - How to + ViewPager Integration</h1>
     
     
       <p class="meta">
@@ -83,31 +86,77 @@
   
 
 
-<time datetime="2013-08-23T12:27:00+08:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2013</time>
+<time datetime="2013-09-03T15:07:00+08:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I am the developer for a small note taking app called <strong>Dog Writer</strong>. It&rsquo;s allows you to write your thoughts in plain text and sync them to Dropbox .</p>
+<div class="entry-content"><p>Now tabs are just UI pieces. It can be added by interacting with three components
+1. ActionBar.TabListener
+2. ActionBar itself
+3. ActionBar.newTab() &hellip;. okay this is more like a method, I concede.</p>
 
-<p>Now I never thought that anything would be better than text to allow focused writing. <strong>UNTIL</strong> today. It all started with a little dabbling with Octopress. Hail as the blog engine for hackers, it let users type out their blogs in Markdown.</p>
+<p>The implementation patterns are as such:</p>
 
-<blockquote><p>Markdown is the new Rich Text format (RTF) equivalent. It allows the writer to effortlessly format their writing without using mouse or ugly TAGS.</p></blockquote>
+<p>in <code>onCreate(Bundle savedInstanceState)</code></p>
 
-<p>Very tempted to integrate this function into Dog Writer. It could well be the killer app. Good use of my time?</p>
+<pre><code>final ActionBar actionBar = getActionBar();
 
-<p><strong>Update</strong>: Manage to integrate in a markdown preview window.</p>
+//set the navigation mode of actionbar to
+actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-<p>Other possible enhancements:</p>
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
 
-<ul>
-<li>save as md</li>
-<li>ads removal</li>
-<li>syntax help</li>
-</ul>
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
 
+    }
+
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+}
+
+actionBar.addTab(actionBar.newTab().setText("Tab1").setTabListener(tabListener));
+</code></pre>
+
+<p>For more tabs, add in more <code>addTab</code> function calls for ActionBar.</p>
+
+<h2>Relationships</h2>
+
+<blockquote><p>ActionBar is set to NAVIGATION_MODE_TABS and has
+ActionBar.Tabs whom in turns are associated with TabListerner.</p></blockquote>
+
+<h2>Viewpager Integration</h2>
+
+<p>In my last <a href="/blog/2013/09/03/using-the-viewpager-essence/">post</a>, we talked about viewpager.
+If you read it up, you will see that there is no UI to select the page to show using. Let&rsquo;s correct that now.</p>
+
+<p>We just have to modify the TabListerner code above as follows:</p>
+
+<pre><code>...
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
+
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+...
+</code></pre>
+
+<p><code>setCurrentItem</code> accepts <code>int position</code> as inputs which the tab offers. Almost like a match made in
+heaven or they are simply meant to be used together to create great apps.</p>
 </div>
 
 
@@ -130,12 +179,12 @@
   
 
 
-<time datetime="2013-08-23T12:27:00+08:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2013</time>
+<time datetime="2013-09-03T15:07:00+08:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/developement/'>Developement</a>
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/development/'>Development</a>, <a class='category' href='/blog/categories/ui/'>UI</a>
   
 </span>
 
@@ -144,7 +193,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/08/23/dog-write-app-possible-enhancements/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/08/23/dog-write-app-possible-enhancements/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/" >Tweet</a>
   
   
   
@@ -155,10 +204,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/08/22/little-people/" title="Previous Post: Little People">&laquo; Little People</a>
+        <a class="basic-alignment left" href="/blog/2013/09/03/using-the-viewpager-essence/" title="Previous Post: Using the ViewPager - Essence">&laquo; Using the ViewPager - Essence</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/08/26/stock-market-terms-part-1/" title="Next Post: Stock Market Terms Part 1">Stock Market Terms Part 1 &raquo;</a>
       
     </p>
   </footer>
@@ -271,8 +318,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/08/23/dog-write-app-possible-enhancements/';
-        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/08/23/dog-write-app-possible-enhancements/';
+        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/';
+        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/';
         var disqus_script = 'embed.js';
       
     (function () {

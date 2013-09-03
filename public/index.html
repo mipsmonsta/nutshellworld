@@ -9,8 +9,10 @@
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="For one of the project that I am currently working on, I plan to use the viewpager to swipe to
-&ldquo;pages&rdquo; of fragment. The key steps are &hellip;">
+  <meta name="description" content="Now tabs are just UI pieces. It can be added by interacting with three components
+1. ActionBar.TabListener
+2. ActionBar itself
+3. ActionBar.newTab &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,105 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/">Android Action Bar Tab - How to + ViewPager Integration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-03T15:07:00+08:00" pubdate data-updated="true">Sep 3<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Now tabs are just UI pieces. It can be added by interacting with three components
+1. ActionBar.TabListener
+2. ActionBar itself
+3. ActionBar.newTab() &hellip;. okay this is more like a method, I concede.</p>
+
+<p>The implementation patterns are as such:</p>
+
+<p>in <code>onCreate(Bundle savedInstanceState)</code></p>
+
+<pre><code>final ActionBar actionBar = getActionBar();
+
+//set the navigation mode of actionbar to
+actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
+
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+}
+
+actionBar.addTab(actionBar.newTab().setText("Tab1").setTabListener(tabListener));
+</code></pre>
+
+<p>For more tabs, add in more <code>addTab</code> function calls for ActionBar.</p>
+
+<h2>Relationships</h2>
+
+<blockquote><p>ActionBar is set to NAVIGATION_MODE_TABS and has
+ActionBar.Tabs whom in turns are associated with TabListerner.</p></blockquote>
+
+<h2>Viewpager Integration</h2>
+
+<p>In my last <a href="/blog/2013/09/03/using-the-viewpager-essence/">post</a>, we talked about viewpager.
+If you read it up, you will see that there is no UI to select the page to show using. Let&rsquo;s correct that now.</p>
+
+<p>We just have to modify the TabListerner code above as follows:</p>
+
+<pre><code>...
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
+
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+...
+</code></pre>
+
+<p><code>setCurrentItem</code> accepts <code>int position</code> as inputs which the tab offers. Almost like a match made in
+heaven or they are simply meant to be used together to create great apps.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -185,7 +286,7 @@ List&lt;Fragment&gt; getFragments()
 }
 </code></pre>
 
-<p>The final bit is to integrate with actionBar tabs. But I should leave it as the next post to talk about tabs.</p>
+<p>The final bit is to integrate with actionBar tabs. But I should leave it as part of the next post to talk about tabs.</p>
 </div>
   
   
@@ -608,55 +709,6 @@ Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value whi
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/">Using Request Maker to Post to Google App Engine</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-28T16:07:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.requestmaker.com">Request Maker</a> allows you to send GET/POST/GET/PUT/DELETE request to any web url. I was particularly
-interested in its ability to send Post messages to my Google App Engine app.</p>
-
-<p>For example, if I want to send foo=bar&amp;mad=man as the request body, I just have to typed
-<code>foo=bar&amp;mad=man</code> verbertim into the Request Data form input at request maker.</p>
-
-<p>However, I had difficulty extracting these key-values at Google App Engine using
-the <code>request.getParameter(&ldquo;foo&rdquo;)</code> code.</p>
-
-<p>Turns out for it all to work, you need to set the request header&rsquo;s content-type to</p>
-
-<blockquote><p>application/x-www-form-urlencoded; charset=utf-8</p></blockquote>
-
-<p>That helped me and I hope it helps you.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -672,6 +724,10 @@ the <code>request.getParameter(&ldquo;foo&rdquo;)</code> code.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/">Android Action Bar Tab - How to + ViewPager Integration</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/03/using-the-viewpager-essence/">Using the ViewPager - Essence</a>
       </li>
     
@@ -685,10 +741,6 @@ the <code>request.getParameter(&ldquo;foo&rdquo;)</code> code.</p>
     
       <li class="post">
         <a href="/blog/2013/09/02/image-dpi-and-android/">Image DPI and Android</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/">Loading Screen Activity (AKA) SplashScreen for Android</a>
       </li>
     
   </ul>

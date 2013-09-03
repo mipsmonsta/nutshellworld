@@ -9,7 +9,8 @@
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="Trying to get a handle on some stock market terms&hellip; here we go Outstanding shares of its stock, that is shares held by the public outside of &hellip;">
+  <meta name="description" content="Request Maker allows you to send GET/POST/GET/PUT/DELETE request to any web url. I was particularly
+interested in its ability to send Post messages &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -64,6 +65,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/">Using Request Maker to Post to Google App Engine</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-28T16:07:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.requestmaker.com">Request Maker</a> allows you to send GET/POST/GET/PUT/DELETE request to any web url. I was particularly
+interested in its ability to send Post messages to my Google App Engine app.</p>
+
+<p>For example, if I want to send foo=bar&amp;mad=man as the request body, I just have to typed
+<code>foo=bar&amp;mad=man</code> verbertim into the Request Data form input at request maker.</p>
+
+<p>However, I had difficulty extracting these key-values at Google App Engine using
+the <code>request.getParameter(&ldquo;foo&rdquo;)</code> code.</p>
+
+<p>Turns out for it all to work, you need to set the request header&rsquo;s content-type to</p>
+
+<blockquote><p>application/x-www-form-urlencoded; charset=utf-8</p></blockquote>
+
+<p>That helped me and I hope it helps you.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -413,6 +463,10 @@ twitter_tweet_button: true</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/">Android Action Bar Tab - How to + ViewPager Integration</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/03/using-the-viewpager-essence/">Using the ViewPager - Essence</a>
       </li>
     
@@ -426,10 +480,6 @@ twitter_tweet_button: true</p>
     
       <li class="post">
         <a href="/blog/2013/09/02/image-dpi-and-android/">Image DPI and Android</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/">Loading Screen Activity (AKA) SplashScreen for Android</a>
       </li>
     
   </ul>
