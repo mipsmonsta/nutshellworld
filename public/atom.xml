@@ -4,7 +4,7 @@
   <title><![CDATA[Nutshell World]]></title>
   <link href="http://nutshellworld.herokuapp.com/atom.xml" rel="self"/>
   <link href="http://nutshellworld.herokuapp.com/"/>
-  <updated>2013-09-03T16:28:52+08:00</updated>
+  <updated>2013-09-03T16:31:24+08:00</updated>
   <id>http://nutshellworld.herokuapp.com/</id>
   <author>
     <name><![CDATA[TYJ]]></name>
@@ -65,7 +65,8 @@ ActionBar.Tabs whom in turns are associated with TabListerner.</p></blockquote>
 <h2>Viewpager Integration</h2>
 
 <p>In my last <a href="http://nutshellworld.herokuapp.com/blog/2013/09/03/using-the-viewpager-essence/">post</a>, we talked about viewpager.
-If you read it up, you will see that there is no UI to select the page to show using. Let&rsquo;s correct that now.</p>
+If you read it up, you will see that there is no UI to select the page to show. We can use the
+tabs to achieve this.</p>
 
 <p>We just have to modify the TabListerner code above as follows:</p>
 

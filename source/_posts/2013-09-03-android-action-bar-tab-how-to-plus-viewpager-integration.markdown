@@ -54,7 +54,8 @@ Viewpager Integration
 ----------------------
 
 In my last [post](/blog/2013/09/03/using-the-viewpager-essence/), we talked about viewpager.
-If you read it up, you will see that there is no UI to select the page to show using. Let's correct that now.
+If you read it up, you will see that there is no UI to select the page to show. We can use the 
+tabs to achieve this.
 
 We just have to modify the TabListerner code above as follows:
 
