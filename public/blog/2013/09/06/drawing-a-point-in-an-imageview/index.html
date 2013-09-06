@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Android - Nutshell World</title>
+  <title>Drawing a point in an ImageView - Nutshell World</title>
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="Category: Android">
+  <meta name="description" content="Suppose you have an image that is of size 50 px by 50 px. This image will be presented in an
+imageview. Now if you wanted to draw a point at exactly &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://nutshellworld.herokuapp.comblog/categories/android/">
+  <link rel="canonical" href="http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -63,148 +64,117 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Android</h1>
+    
+      <h1 class="entry-title">Drawing a Point in an ImageView</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-06T15:35:00+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2013</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Suppose you have an image that is of size 50 px by 50 px. This image will be presented in an
+imageview. Now if you wanted to draw a point at exactly (30 px, 30 px) in the image coordinate space,
+how would you go about it in Android.</p>
 
-  
-  <h2>2013</h2>
+<p>First of all, let&rsquo;s talk about challenges posed by the Android framework. The size of the imageview
+may not be the same size and/or aspect as the image. Also, pre-scaling of the bitmap may be done since the
+density of the screen may be higher than what was assumed for the bitmap image. <strong>Headache</strong> is all.</p>
 
-<article>
-  
-<h1><a href="/blog/2013/09/06/drawing-a-point-in-an-imageview/">Drawing a point in an ImageView</a></h1>
-<time datetime="2013-09-06T15:35:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>06</span> <span class='year'>2013</span></time>
+<p>My solution:</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/development/'>Development</a>, <a class='category' href='/blog/categories/graphics/'>Graphics</a></span>
-</footer>
+<blockquote><p>In onDraw() method in a subclassed ImageView</p></blockquote>
 
+<pre><code>Matrix mat = getImageMatrix();
 
-</article>
+float[] pts = {30, 30}; //in {x0, y0, x1, y1,...} format
 
+mat.mapPts(pts);
 
+float mappedX = pts[0];
+float mappedY = pts[1];
+</code></pre>
 
-<article>
-  
-<h1><a href="/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/">Android Action Bar Tab - How to + ViewPager Integration</a></h1>
-<time datetime="2013-09-03T15:07:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>03</span> <span class='year'>2013</span></time>
+<p>Now <em>mappedX</em> and <em>mappedY</em> will be the new coordinates for (30px, 30px) in the <em>new</em> image coordinate space.</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/development/'>Development</a>, <a class='category' href='/blog/categories/ui/'>UI</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/09/03/using-the-viewpager-essence/">Using the ViewPager - Essence</a></h1>
-<time datetime="2013-09-03T13:59:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>03</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/development/'>Development</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/09/02/objectanimator-and-their-use/">ObjectAnimator and their use</a></h1>
-<time datetime="2013-09-02T12:44:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>02</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/animation/'>Animation</a>, <a class='category' href='/blog/categories/development/'>Development</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/09/02/image-dpi-and-android/">Image DPI and Android</a></h1>
-<time datetime="2013-09-02T10:22:00+08:00" pubdate><span class='month'>Sep</span> <span class='day'>02</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/graphics/'>Graphics</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/">Loading Screen Activity (AKA) SplashScreen for Android</a></h1>
-<time datetime="2013-08-29T17:16:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>29</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/development/'>Development</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/08/28/simple-json-array-to-string/">Simple JSON Array to string</a></h1>
-<time datetime="2013-08-28T19:22:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>28</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/json/'>JSON</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/">Using Request Maker to Post to Google App Engine</a></h1>
-<time datetime="2013-08-28T16:07:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>28</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/networking/'>Networking</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/08/23/dog-write-app-possible-enhancements/">Dog Write App - Possible Enhancements</a></h1>
-<time datetime="2013-08-23T12:27:00+08:00" pubdate><span class='month'>Aug</span> <span class='day'>23</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/developement/'>Developement</a></span>
-</footer>
-
-
-</article>
-
+<p>Cheers!</p>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">TYJ</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-06T15:35:00+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/development/'>Development</a>, <a class='category' href='/blog/categories/graphics/'>Graphics</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview/" data-via="mipsmonsta" data-counturl="http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/" title="Previous Post: Android Action Bar Tab - How to + ViewPager Integration">&laquo; Android Action Bar Tab - How to + ViewPager Integration</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -306,7 +276,10 @@
       var disqus_shortname = 'nutshellworld';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview/';
+        var disqus_url = 'http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

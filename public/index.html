@@ -9,10 +9,8 @@
   <meta name="author" content="TYJ">
 
   
-  <meta name="description" content="Now tabs are just UI pieces. It can be added by interacting with three components
-1. ActionBar.TabListener
-2. ActionBar itself
-3. ActionBar.newTab &hellip;">
+  <meta name="description" content="Suppose you have an image that is of size 50 px by 50 px. This image will be presented in an
+imageview. Now if you wanted to draw a point at exactly &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/06/drawing-a-point-in-an-imageview/">Drawing a Point in an ImageView</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-06T15:35:00+08:00" pubdate data-updated="true">Sep 6<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Suppose you have an image that is of size 50 px by 50 px. This image will be presented in an
+imageview. Now if you wanted to draw a point at exactly (30 px, 30 px) in the image coordinate space,
+how would you go about it in Android.</p>
+
+<p>First of all, let&rsquo;s talk about challenges posed by the Android framework. The size of the imageview
+may not be the same size and/or aspect as the image. Also, pre-scaling of the bitmap may be done since the
+density of the screen may be higher than what was assumed for the bitmap image. <strong>Headache</strong> is all.</p>
+
+<p>My solution:</p>
+
+<blockquote><p>In onDraw() method in a subclassed ImageView</p></blockquote>
+
+<pre><code>Matrix mat = getImageMatrix();
+
+float[] pts = {30, 30}; //in {x0, y0, x1, y1,...} format
+
+mat.mapPts(pts);
+
+float mappedX = pts[0];
+float mappedY = pts[1];
+</code></pre>
+
+<p>Now <em>mappedX</em> and <em>mappedY</em> will be the new coordinates for (30px, 30px) in the <em>new</em> image coordinate space.</p>
+
+<p>Cheers!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -659,57 +717,6 @@ to stand alone.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/28/simple-json-array-to-string/">Simple JSON Array to String</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-28T19:22:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Supposed you have the following json array</p>
-
-<p><code>{&ldquo;apple&rdquo;:&ldquo;twelve&rdquo;, &ldquo;banana&rdquo;: &ldquo;three&rdquo;, &ldquo;oranges&rdquo;: &ldquo;five&rdquo;}</code>, how do you extract the value
-of &ldquo;oranges&rdquo; i.e. &ldquo;five&rdquo;?</p>
-
-<p>As simple as this sounds, this took me awhile to figure using <a href="http://code.google.com/p/google-gson/">GSON</a>.</p>
-
-<pre><code>JsonElement jelement = new JsonParser().parse(purchaseInfo);                
-result = jelement.getAsJsonObject().get("oranges").getAsString();
-</code></pre>
-
-<p>Now <em>result</em> will contains the string &ldquo;five&rdquo;. That was easy! The above was used in my Google
-App Engine app.</p>
-
-<p>In English, this would be: &ldquo;the array is a json object with the json object of property &#8220;oranges&rdquo;.
-Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value which is &ldquo;five&rdquo;.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -725,6 +732,10 @@ Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value whi
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/06/drawing-a-point-in-an-imageview/">Drawing a point in an ImageView</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/">Android Action Bar Tab - How to + ViewPager Integration</a>
       </li>
     
@@ -738,10 +749,6 @@ Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value whi
     
       <li class="post">
         <a href="/blog/2013/09/02/git-simple-guide/">Git Simple Guide</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/02/image-dpi-and-android/">Image DPI and Android</a>
       </li>
     
   </ul>

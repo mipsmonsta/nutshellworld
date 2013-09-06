@@ -71,12 +71,18 @@
         <lastmod>2013-09-03T16:31:15+08:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview/
+        </loc>
+        <lastmod>2013-09-06T16:00:13+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://nutshellworld.herokuapp.com/blog/archives/</loc>
-        <lastmod>2013-09-03T16:31:15+08:00</lastmod>
+        <lastmod>2013-09-06T16:00:13+08:00</lastmod>
     </url>
     <url>
         <loc>http://nutshellworld.herokuapp.com/</loc>
-        <lastmod>2013-09-03T16:31:15+08:00</lastmod>
+        <lastmod>2013-09-06T16:00:13+08:00</lastmod>
     </url>
     <url>
         <loc>http://nutshellworld.herokuapp.com/robots.txt</loc>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Nutshell World]]></title>
   <link href="http://nutshellworld.herokuapp.com/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://nutshellworld.herokuapp.com/"/>
-  <updated>2013-09-03T16:31:24+08:00</updated>
+  <updated>2013-09-06T16:01:03+08:00</updated>
   <id>http://nutshellworld.herokuapp.com/</id>
   <author>
     <name><![CDATA[TYJ]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Drawing a point in an ImageView]]></title>
+    <link href="http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview/"/>
+    <updated>2013-09-06T15:35:00+08:00</updated>
+    <id>http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview</id>
+    <content type="html"><![CDATA[<p>Suppose you have an image that is of size 50 px by 50 px. This image will be presented in an
+imageview. Now if you wanted to draw a point at exactly (30 px, 30 px) in the image coordinate space,
+how would you go about it in Android.</p>
+
+<p>First of all, let&rsquo;s talk about challenges posed by the Android framework. The size of the imageview
+may not be the same size and/or aspect as the image. Also, pre-scaling of the bitmap may be done since the
+density of the screen may be higher than what was assumed for the bitmap image. <strong>Headache</strong> is all.</p>
+
+<p>My solution:</p>
+
+<blockquote><p>In onDraw() method in a subclassed ImageView</p></blockquote>
+
+<pre><code>Matrix mat = getImageMatrix();
+
+float[] pts = {30, 30}; //in {x0, y0, x1, y1,...} format
+
+mat.mapPts(pts);
+
+float mappedX = pts[0];
+float mappedY = pts[1];
+</code></pre>
+
+<p>Now <em>mappedX</em> and <em>mappedY</em> will be the new coordinates for (30px, 30px) in the <em>new</em> image coordinate space.</p>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Android Action Bar Tab - How to + ViewPager Integration]]></title>
@@ -337,56 +370,6 @@ the one with the higher dpi will print as half the dimension as the other.</p>
 
 <p>For us Android developers, we just have to stop worrying about image dpi. If only we
 can do the same for screen density&hellip;lol.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Loading Screen Activity (AKA) SplashScreen for Android]]></title>
-    <link href="http://nutshellworld.herokuapp.com/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/"/>
-    <updated>2013-08-29T17:16:00+08:00</updated>
-    <id>http://nutshellworld.herokuapp.com/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android</id>
-    <content type="html"><![CDATA[<p>I was dabbling with implementing <em>In App Purchase (IAB)</em>  for my Android app. According to Google documentation,
-it would be best to change the UI instantly once the purchase was successful. However, this is not possible
-for my app unless after a restart.</p>
-
-<p>The documentation also advised to do a server query for the purchased item status every so often, preferably
-everytime the app is started.</p>
-
-<p>How I implemented my part of my app&rsquo;s IAB workflow is as such:</p>
-
-<ol>
-<li>User makes the purchase, but the UI of the app will only update after the next app&rsquo;s start up.</li>
-<li>If the User download the app on his other devices for the first time, app will need to check for his
-purchases before going into the main UI.</li>
-</ol>
-
-
-<p>The above use cases led me to implement a splash screen activity that will always run before my main UI activity.
-However I have some optimizing to shorten the on screen time of this splash screen. After all, who likes to wait?</p>
-
-<p>Some of the design choices to cut waiting time are:</p>
-
-<ul>
-<li>When the purchase transaction first came through, I would set a flag in the app to note this event.</li>
-<li>Then I forced the app to shutdown and prompt the user to <em>restart</em> the app with a Toast message.</li>
-<li>At the next start-up, the splash screen <code>onCreate()</code> code will check for the presence of the flag.
-
-<ul>
-<li>If the flag exists, the splashscreen quickly starts the main UI activity.</li>
-<li>If not, this start-up could be the first start up on a device that newly install the app.
-
-<ul>
-<li>So the splashscreen activity will check with Google Play Services for any purchases. In this case
-the splash screen may dwell longer on the screen becauses of server calls.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-
-<p>To make the splash screen as unintrusive as possible, I also styled the activity using the
-<code>android:theme="@android:style/Theme.Dialog</code> in the application manifest.</p>
 ]]></content>
   </entry>
   

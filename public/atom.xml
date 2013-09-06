@@ -4,7 +4,7 @@
   <title><![CDATA[Nutshell World]]></title>
   <link href="http://nutshellworld.herokuapp.com/atom.xml" rel="self"/>
   <link href="http://nutshellworld.herokuapp.com/"/>
-  <updated>2013-09-03T16:31:24+08:00</updated>
+  <updated>2013-09-06T16:01:03+08:00</updated>
   <id>http://nutshellworld.herokuapp.com/</id>
   <author>
     <name><![CDATA[TYJ]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Drawing a point in an ImageView]]></title>
+    <link href="http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview/"/>
+    <updated>2013-09-06T15:35:00+08:00</updated>
+    <id>http://nutshellworld.herokuapp.com/blog/2013/09/06/drawing-a-point-in-an-imageview</id>
+    <content type="html"><![CDATA[<p>Suppose you have an image that is of size 50 px by 50 px. This image will be presented in an
+imageview. Now if you wanted to draw a point at exactly (30 px, 30 px) in the image coordinate space,
+how would you go about it in Android.</p>
+
+<p>First of all, let&rsquo;s talk about challenges posed by the Android framework. The size of the imageview
+may not be the same size and/or aspect as the image. Also, pre-scaling of the bitmap may be done since the
+density of the screen may be higher than what was assumed for the bitmap image. <strong>Headache</strong> is all.</p>
+
+<p>My solution:</p>
+
+<blockquote><p>In onDraw() method in a subclassed ImageView</p></blockquote>
+
+<pre><code>Matrix mat = getImageMatrix();
+
+float[] pts = {30, 30}; //in {x0, y0, x1, y1,...} format
+
+mat.mapPts(pts);
+
+float mappedX = pts[0];
+float mappedY = pts[1];
+</code></pre>
+
+<p>Now <em>mappedX</em> and <em>mappedY</em> will be the new coordinates for (30px, 30px) in the <em>new</em> image coordinate space.</p>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Android Action Bar Tab - How to + ViewPager Integration]]></title>
