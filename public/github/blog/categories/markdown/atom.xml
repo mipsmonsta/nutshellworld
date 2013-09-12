@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Markdown | Nutshell World]]></title>
+  <link href="http://mipsmonsta.github.io//github/blog/categories/markdown/atom.xml" rel="self"/>
+  <link href="http://mipsmonsta.github.io//github/"/>
+  <updated>2013-09-12T15:50:21+08:00</updated>
+  <id>http://mipsmonsta.github.io//github/</id>
+  <author>
+    <name><![CDATA[TYJ]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[CSS Jargons - Span Element vs Block Element]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/28/css-jargons-span-element-vs-block-element/"/>
+    <updated>2013-08-28T19:48:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/28/css-jargons-span-element-vs-block-element</id>
+    <content type="html"><![CDATA[<p>It finally <em>dawn</em> on me that my understanding of &ldquo;span&rdquo; in the context of CSS or markdown has
+nothing to do with &ldquo;length&rdquo;. Rather it means that the &ldquo;span&rdquo; element is supposed to be inline with
+other elements. The opposite of a span element is a block element, which is like an element that wants
+to stand alone.</p>
+
+<p>Now I finally understand the difference between <strong>code span</strong> and <strong>code block</strong> while reading the
+<a href="http://daringfireball.net/projects/markdown/syntax">markdown guide</a></p>
+]]></content>
+  </entry>
+  
+</feed>

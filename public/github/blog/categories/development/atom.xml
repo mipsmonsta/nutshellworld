@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Development | Nutshell World]]></title>
+  <link href="http://mipsmonsta.github.io//github/blog/categories/development/atom.xml" rel="self"/>
+  <link href="http://mipsmonsta.github.io//github/"/>
+  <updated>2013-09-12T15:50:21+08:00</updated>
+  <id>http://mipsmonsta.github.io//github/</id>
+  <author>
+    <name><![CDATA[TYJ]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Drawing a point in an ImageView]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/06/drawing-a-point-in-an-imageview/"/>
+    <updated>2013-09-06T15:35:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/06/drawing-a-point-in-an-imageview</id>
+    <content type="html"><![CDATA[<p>Suppose you have an image that is of size 50 px by 50 px. This image will be presented in an
+imageview. Now if you wanted to draw a point at exactly (30 px, 30 px) in the image coordinate space,
+how would you go about it in Android.</p>
+
+<p>First of all, let&rsquo;s talk about challenges posed by the Android framework. The size of the imageview
+may not be the same size and/or aspect as the image. Also, pre-scaling of the bitmap may be done since the
+density of the screen may be higher than what was assumed for the bitmap image. <strong>Headache</strong> is all.</p>
+
+<p>My solution:</p>
+
+<blockquote><p>In onDraw() method in a subclassed ImageView</p></blockquote>
+
+<pre><code>Matrix mat = getImageMatrix();
+
+float[] pts = {30, 30}; //in {x0, y0, x1, y1,...} format
+
+mat.mapPts(pts);
+
+float mappedX = pts[0];
+float mappedY = pts[1];
+</code></pre>
+
+<p>Now <em>mappedX</em> and <em>mappedY</em> will be the new coordinates for (30px, 30px) in the <em>new</em> image coordinate space.</p>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android Action Bar Tab - How to + ViewPager Integration]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/"/>
+    <updated>2013-09-03T15:07:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration</id>
+    <content type="html"><![CDATA[<p>Now tabs are just UI pieces. It can be added by interacting with three components
+1. ActionBar.TabListener
+2. ActionBar itself
+3. ActionBar.newTab() &hellip;. okay this is more like a method, I concede.</p>
+
+<p>The implementation patterns are as such:</p>
+
+<p>in <code>onCreate(Bundle savedInstanceState)</code></p>
+
+<pre><code>final ActionBar actionBar = getActionBar();
+
+//set the navigation mode of actionbar to
+actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
+
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+}
+
+actionBar.addTab(actionBar.newTab().setText("Tab1").setTabListener(tabListener));
+</code></pre>
+
+<p>For more tabs, add in more <code>addTab</code> function calls for ActionBar.</p>
+
+<h2>Relationships</h2>
+
+<blockquote><p>ActionBar is set to NAVIGATION_MODE_TABS and has
+ActionBar.Tabs whom in turns are associated with TabListerner.</p></blockquote>
+
+<h2>Viewpager Integration</h2>
+
+<p>In my last <a href="/blog/2013/09/03/using-the-viewpager-essence/">post</a>, we talked about viewpager.
+If you read it up, you will see that there is no UI to select the page to show. We can use the
+tabs to achieve this.</p>
+
+<p>We just have to modify the TabListerner code above as follows:</p>
+
+<pre><code>...
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
+
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+...
+</code></pre>
+
+<p><code>setCurrentItem</code> accepts <code>int position</code> as inputs which the tab offers. Almost like a match made in
+heaven or they are simply meant to be used together to create great apps.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using the ViewPager - Essence]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/03/using-the-viewpager-essence/"/>
+    <updated>2013-09-03T13:59:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/03/using-the-viewpager-essence</id>
+    <content type="html"><![CDATA[<p>For one of the project that I am currently working on, I plan to use the viewpager to swipe to
+&ldquo;pages&rdquo; of fragment. The key steps are planned below for implementation.</p>
+
+<h2>Set-up Host Activity&rsquo;s Layout</h2>
+
+<p>The layout file needs to include a xml viewpager. Notice this is available in the support library.
+The viewpager is also occupying the full screen except for the status bar chrome.</p>
+
+<pre><code>&lt;android.support.v4.view.ViewPager
+ android:id="@+id/viewpager"
+ android:layout_width="fill_parent"
+ android:layout_height="fill_parent" /&gt;
+</code></pre>
+
+<h2>Changes to Host Activity</h2>
+
+<p>The host activity would need to be inherited from FragmentActivity (I take it because of the use
+of the support library).</p>
+
+<p>This activity will also need to hold on to an instance of a subclassed PageAdapter. In the
+<code>onCreate(Bundle savedInstanceState)</code>, we can find the viewpager from the activity&rsquo;s layout and
+then set the adapter to the instance of PageAdapter.</p>
+
+<pre><code>...
+ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+List&lt;Fragment&gt; fragments = getFragments();
+pageAdapter = new SubClassdPageAdapter(getSupportFragmentManager(), fragments);
+pager.setAdapter(pageAdapter);
+</code></pre>
+
+<p><a href id="getFragments"></a>
+Notice the instantization of the pageAdapter included steps to feed it the supportFragmentManager and a
+list of fragments that each will be the &ldquo;page&rdquo;.</p>
+
+<h2>Declaration of the Subclassed Page Adapter</h2>
+
+<pre><code>class SubClassedPageAdapter extends FragmentPagerAdapter {
+
+    private List&lt;Fragment&gt; fragments;
+
+    public SubClassedPageAdapter(FragmentManager fm, List&lt;Fragment&gt; fragments)
+    {
+        super(fm);
+        this.fragments = fragments;
+    }
+
+    @Override
+    public Fragment getItem(int position)
+    {
+        return this.fragments.get(position);
+    }
+
+    public int getCount()
+    {
+        return fragments.size();
+    }
+
+}
+</code></pre>
+
+<p>The focus to note is the contructor which takes in the support fragment manager and a list of fragments.
+The other things to note are the <code>getItem(int position)</code> and <code>getCount()</code> since these are abstract
+to begin with. The job of the PagerAdapter is just to act as the intermediary to return the
+right fragments to the viewpager.</p>
+
+<h2>&ldquo;Flow&rdquo; of fragments</h2>
+
+<p>ViewPager &lt;&mdash;&mdash;(right fragment)&mdash;&mdash;PageAdapter&lt;&mdash;&mdash;-List of Fragments</p>
+
+<h2>Relationships</h2>
+
+<p>+ViewPager has an adapter of PageAdapter.
++PageAdapter contains a list of fragments.</p>
+
+<h2>Getting the list of Fragments</h2>
+
+<p>Recall the <code>getFragments()</code> <a href="#getFragments">function</a> call in the main activity in <code>onCreate</code>?
+We just need to implement it to have our working viewpager workflow.</p>
+
+<pre><code>...in main activity's code
+List&lt;Fragment&gt; getFragments()
+{
+    List&lt;Fragment&gt; result = new ArrayList&lt;Fragment&gt;();
+
+    Fragment frag1 = Fragment.newInstance();
+    result.add(frag1);
+    Fragment frag2 = Fragment.newInstance();
+    result.add(frag2);
+}
+</code></pre>
+
+<p>The final bit is to integrate with actionBar tabs. But I should leave it as part of the next post to talk about tabs.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ObjectAnimator and their use]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/02/objectanimator-and-their-use/"/>
+    <updated>2013-09-02T12:44:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/02/objectanimator-and-their-use</id>
+    <content type="html"><![CDATA[<h2>History</h2>
+
+<p>Object animator was added in Android API 11 (Honeycomb i.e. 3.0). This class allows <em>targeting</em> objects (views or fragmentInstance.getView())
+and animating their properties.</p>
+
+<h2>Use</h2>
+
+<pre><code>ObjectAnimator movingFragmentAnimator = ObjectAnimator.
+            ofPropertyValuesHolder(&lt;target&gt;, &lt;PropertyValuesHolder value&gt;, &lt;PropertyValuesHolder value&gt;, ...);
+</code></pre>
+
+<p>Here you can see a static constructor that takes in <em>list</em> of PropertyValuesHolder values all
+targeting the same view object.</p>
+
+<p><strong>OR</strong></p>
+
+<pre><code>ObjectAnimator darkHoverViewAnimator = ObjectAnimator.
+            ofFloat(mDarkHoverView, "alpha", 0.0f, 0.5f);
+</code></pre>
+
+<p>Only one property of the target is to be animated here.</p>
+
+<h2>PropertyValuesHolder</h2>
+
+<pre><code>PropertyValuesHolder rotateX =  PropertyValuesHolder.ofFloat("rotationX", 40f);
+</code></pre>
+
+<p>Here you can see that <strong>rotationX</strong> is the property value to change and &ldquo;40f&rdquo; is the degree to turn about the x-axis.</p>
+
+<h2>Tweaking Object Animator further <a id="tweaks"></a></h2>
+
+<p>Duration of the animation can be changed:</p>
+
+<pre><code>darkHoverViewAnimator.setDuration(long millisec)
+</code></pre>
+
+<p><strong>Default</strong> duration is 300 msec according to documentation.</p>
+
+<p>How about starting animation with a delay:</p>
+
+<pre><code>darkHoverViewAnimator.startDelay(long millisec)
+</code></pre>
+
+<h2>Starting animation of an Object animator</h2>
+
+<pre><code>darkHoverViewAnimator.start()
+</code></pre>
+
+<h2>Starting animation of multiple Object Animators</h2>
+
+<p>We achieve this by using a <em>AnimatorSet</em> instance instead of calling individual objectanimator&rsquo;s start().</p>
+
+<pre><code>  AnimatorSet s = new AnimatorSet();
+  s.playTogether(movingFragmentAnimator, darkHoverViewAnimator, movingFragmentRotator);
+  s.addListener(listener); 
+  s.start();
+</code></pre>
+
+<p>The animatorset allows the simultaneous playback of all animator&rsquo;s animation. When each object(target) starts their animation
+depends of course on whether their startDelay property has been <a href="#tweaks">set</a>.</p>
+
+<h2>Chaining even more animations to start after</h2>
+
+<p>Notice the line <code>s.addListener(listener)</code>? The class of the listener in this case is <strong>Animator.AnimatorListener</strong>.
+An instance of this AnimatorListener allows the overriding of four methods that corresponds to
+specific instance of the animator&rsquo;s lifecycle.</p>
+
+<pre><code>    AnimatorListener listener = new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator arg0) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.slide_fragment_in, 0, 0,
+                        R.animator.slide_fragment_out);
+                transaction.add(R.id.move_to_back_container, mTextFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        };
+</code></pre>
+
+<p>We are only overriding the <em>onAnimationEnd</em>. There are other lifecycle events that we can also tracked:</p>
+
+<ul>
+<li>onAnimationCancel</li>
+<li>onAnimationStart</li>
+<li>onAnimationRepeat</li>
+</ul>
+
+
+<p>See <a href="http://developer.android.com/reference/android/animation/Animator.AnimatorListener.html">documentation for AnimatorListener to find out more</a>.</p>
+
+<p>In the above code, we will add a fragment in at the end of AnimatorSet&rsquo;s animation. Interestingly,
+doc for FragmentTransaction says</p>
+
+<blockquote><p>abstract FragmentTransaction  <br/>
+setCustomAnimations(int enter, int exit, int popEnter, int popExit)
+<em>Desc:</em> Set specific animation resources to run for the fragments that are entering and exiting in this transaction.</p></blockquote>
+
+<p>This means that mTextFragment will &ldquo;enter&rdquo; and &ldquo;pop out&rdquo; with the specified animation resource ids.
+I suspect &ldquo;popEnter&rdquo; refers to the animation for the fragment beneath mTextFragment when it pops up.
+We of course set this animation resource id to <em>&ldquo;zero&rdquo;</em>, indicating no animation at all.</p>
+
+<h2>Specifying Object Animator in XML in lieu of code</h2>
+
+<pre><code>&lt;objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:valueFrom="0"
+    android:valueTo="@dimen/slide_up_down_fraction"
+    android:propertyName="yFraction"
+    android:valueType="floatType"
+    android:duration="@integer/slide_up_down_duration"&gt;
+&lt;/objectAnimator&gt;
+</code></pre>
+
+<p>The xml objectAnimator file will go under the &ldquo;animator&rdquo; folder. It&rsquo;s resource identifier will be
+R.animator.&lt;name_of_file>.</p>
+
+<h2>Summary</h2>
+
+<p>We saw how to use the following objects together or in partial isolation to achieve useful animations:
++ PropertyValuesHolder
++ ObjectAnimator
++ AnimatorSet
++ AnimatorListener.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Loading Screen Activity (AKA) SplashScreen for Android]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/"/>
+    <updated>2013-08-29T17:16:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android</id>
+    <content type="html"><![CDATA[<p>I was dabbling with implementing <em>In App Purchase (IAB)</em>  for my Android app. According to Google documentation,
+it would be best to change the UI instantly once the purchase was successful. However, this is not possible
+for my app unless after a restart.</p>
+
+<p>The documentation also advised to do a server query for the purchased item status every so often, preferably
+everytime the app is started.</p>
+
+<p>How I implemented my part of my app&rsquo;s IAB workflow is as such:</p>
+
+<ol>
+<li>User makes the purchase, but the UI of the app will only update after the next app&rsquo;s start up.</li>
+<li>If the User download the app on his other devices for the first time, app will need to check for his
+purchases before going into the main UI.</li>
+</ol>
+
+
+<p>The above use cases led me to implement a splash screen activity that will always run before my main UI activity.
+However I have some optimizing to shorten the on screen time of this splash screen. After all, who likes to wait?</p>
+
+<p>Some of the design choices to cut waiting time are:</p>
+
+<ul>
+<li>When the purchase transaction first came through, I would set a flag in the app to note this event.</li>
+<li>Then I forced the app to shutdown and prompt the user to <em>restart</em> the app with a Toast message.</li>
+<li>At the next start-up, the splash screen <code>onCreate()</code> code will check for the presence of the flag.
+
+<ul>
+<li>If the flag exists, the splashscreen quickly starts the main UI activity.</li>
+<li>If not, this start-up could be the first start up on a device that newly install the app.
+
+<ul>
+<li>So the splashscreen activity will check with Google Play Services for any purchases. In this case
+the splash screen may dwell longer on the screen becauses of server calls.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>To make the splash screen as unintrusive as possible, I also styled the activity using the
+<code>android:theme="@android:style/Theme.Dialog</code> in the application manifest.</p>
+]]></content>
+  </entry>
+  
+</feed>

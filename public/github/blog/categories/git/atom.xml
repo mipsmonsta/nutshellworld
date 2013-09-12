@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | Nutshell World]]></title>
+  <link href="http://mipsmonsta.github.io//github/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://mipsmonsta.github.io//github/"/>
+  <updated>2013-09-12T15:50:21+08:00</updated>
+  <id>http://mipsmonsta.github.io//github/</id>
+  <author>
+    <name><![CDATA[TYJ]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Git Simple Guide]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/02/git-simple-guide/"/>
+    <updated>2013-09-02T12:01:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/02/git-simple-guide</id>
+    <content type="html"><![CDATA[<p>As the title of this post says: <a href="http://rogerdudler.github.io/git-guide/">Simple Guide to Git</a>.
+Good reference in a visually beautiful way.</p>
+]]></content>
+  </entry>
+  
+</feed>

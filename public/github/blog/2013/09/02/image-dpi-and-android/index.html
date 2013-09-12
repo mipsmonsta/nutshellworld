@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Image DPI and Android - Nutshell World</title>
+  <meta name="author" content="TYJ">
+
+  
+  <meta name="description" content="Android developer documents states that the baseline screen density is taken to be 160 pixels (px) per
+inch. If your device has 240 px per inch (high &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://mipsmonsta.github.io//github/blog/2013/09/02/image-dpi-and-android/">
+  <link href="/github/favicon.png" rel="icon">
+  <link href="/github/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/github/javascripts/modernizr-2.0.js"></script>
+  <script src="/github/javascripts/ender.js"></script>
+  <script src="/github/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/github/atom.xml" rel="alternate" title="Nutshell World" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/github/">Nutshell World</a></h1>
+  
+    <h2>Blog on noteworthy things.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/github/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:mipsmonsta.github.io//github" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/github/">Blog</a></li>
+  <li><a href="/github/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Image DPI and Android</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-02T10:22:00+08:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Android developer documents states that the baseline screen density is taken to be 160 pixels (px) per
+inch. If your device has 240 px per inch (high density), a image of size 100px by 100px will appear larger on the baseline
+baseline screen than the high density screen. Specially, the image will be 0.625 of an inch on baseline screen compared to
+0.416 inch on the higher density screen.</p>
+
+<p>Then how does <em>image dpi</em> relates to how Android serves up the image. The answer as I have researched is <strong>NOTHING</strong>.
+Turns out the image dpi has no bearing on how large the images are displayed on the computer or cellphone screen.
+It does however specify how large these images are printed on paper. For example, two images of 100px by 100px but at different
+dpi of 200 dpi and 100 dpi will look the same size on the same cellphone screen. However, when printed,
+the one with the higher dpi will print as half the dimension as the other.</p>
+
+<p>You can refer to this <a href="http://www.scantips.com/no72dpi.html">scantips</a> for more on image dpi.</p>
+
+<p>For us Android developers, we just have to stop worrying about image dpi. If only we
+can do the same for screen density&hellip;lol.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">TYJ</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-02T10:22:00+08:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/github/blog/categories/android/'>Android</a>, <a class='category' href='/github/blog/categories/graphics/'>Graphics</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://mipsmonsta.github.io//github/blog/2013/09/02/image-dpi-and-android/" data-via="mipsmonsta" data-counturl="http://mipsmonsta.github.io//github/blog/2013/09/02/image-dpi-and-android/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/github/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/" title="Previous Post: Loading Screen Activity (AKA) SplashScreen for Android">&laquo; Loading Screen Activity (AKA) SplashScreen for Android</a>
+      
+      
+        <a class="basic-alignment right" href="/github/blog/2013/09/02/git-simple-guide/" title="Next Post: Git Simple Guide">Git Simple Guide &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/github/blog/2013/09/06/drawing-a-point-in-an-imageview/">Drawing a point in an ImageView</a>
+      </li>
+    
+      <li class="post">
+        <a href="/github/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/">Android Action Bar Tab - How to + ViewPager Integration</a>
+      </li>
+    
+      <li class="post">
+        <a href="/github/blog/2013/09/03/using-the-viewpager-essence/">Using the ViewPager - Essence</a>
+      </li>
+    
+      <li class="post">
+        <a href="/github/blog/2013/09/02/objectanimator-and-their-use/">ObjectAnimator and their use</a>
+      </li>
+    
+      <li class="post">
+        <a href="/github/blog/2013/09/02/git-simple-guide/">Git Simple Guide</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/103153157908925932682?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+<section>
+  <h1>About Me</h1>
+  <div id="twitter-profile" style="margin-top:0.5em;">
+    <p>
+      <strong>TYJ</strong> 
+      (<a href="http://twitter.com/mipsmonsta">@mipsmonsta</a>)
+    </p>
+    <p>Blog, Android Development, Programming, Physics, Family, Life</p>
+  </div>
+  <script type="text/javascript">
+    $(function(){
+        var container = $('#twitter-profile'),
+            user = "mipsmonsta";
+        
+        function parseTwLinks(s) {
+          var twUrl = "http://www.twitter.com/"
+          s = s.replace(/ (@([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+p2+"'>"+p1+"</a>"
+          }).replace(/ (#([\w]+))/g, function(match, p1, p2) {
+              return " <a href='"+twUrl+"#!/search?q=%23"+p2+"'>"+p1+"</a>"
+          })
+          return s
+        }
+
+        $.ajax({
+            url: "http://api.twitter.com/1/users/show.json?include_entities=false&screen_name="+user+"&callback=?"
+          , type: 'GET'
+          , dataType: 'jsonp'
+          , error: function (err) { $('#twitter-profile').addClass('error');  }
+          , success: function(data) {
+              container.html('<img class="left" src="http://api.twitter.com/1/users/profile_image/'+user+'.json?size=bigger" alt="@'+user+'"><p><strong>'+data.name+'</strong> (<a href="http://twitter.com/'+user+'">@'+user+'</a>)<br/>'+data.location+'</p><p>'+parseTwLinks(data.description)+'</p>');
+            }
+        })
+      });
+  </script>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - TYJ -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a>. Design by <a href="http://octopressthemes.com">Octopress Themes</a>. Background image Punggol Waterway</span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'nutshellworld';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://mipsmonsta.github.io//github/blog/2013/09/02/image-dpi-and-android/';
+        var disqus_url = 'http://mipsmonsta.github.io//github/blog/2013/09/02/image-dpi-and-android/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
