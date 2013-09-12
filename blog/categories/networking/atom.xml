@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Networking | Nutshell World]]></title>
+  <link href="http://mipsmonsta.github.io//github/blog/categories/networking/atom.xml" rel="self"/>
+  <link href="http://mipsmonsta.github.io//github/"/>
+  <updated>2013-09-12T15:50:21+08:00</updated>
+  <id>http://mipsmonsta.github.io//github/</id>
+  <author>
+    <name><![CDATA[TYJ]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Using Request Maker to Post to Google App Engine]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/"/>
+    <updated>2013-08-28T16:07:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine</id>
+    <content type="html"><![CDATA[<p><a href="http://www.requestmaker.com">Request Maker</a> allows you to send GET/POST/GET/PUT/DELETE request to any web url. I was particularly
+interested in its ability to send Post messages to my Google App Engine app.</p>
+
+<p>For example, if I want to send foo=bar&amp;mad=man as the request body, I just have to typed
+<code>foo=bar&amp;mad=man</code> verbertim into the Request Data form input at request maker.</p>
+
+<p>However, I had difficulty extracting these key-values at Google App Engine using
+the <code>request.getParameter(&ldquo;foo&rdquo;)</code> code.</p>
+
+<p>Turns out for it all to work, you need to set the request header&rsquo;s content-type to</p>
+
+<blockquote><p>application/x-www-form-urlencoded; charset=utf-8</p></blockquote>
+
+<p>That helped me and I hope it helps you.</p>
+]]></content>
+  </entry>
+  
+</feed>

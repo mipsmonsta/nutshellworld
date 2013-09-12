@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Nutshell World]]></title>
+  <link href="http://mipsmonsta.github.io//github/atom.xml" rel="self"/>
+  <link href="http://mipsmonsta.github.io//github/"/>
+  <updated>2013-09-12T15:50:21+08:00</updated>
+  <id>http://mipsmonsta.github.io//github/</id>
+  <author>
+    <name><![CDATA[TYJ]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Drawing a point in an ImageView]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/06/drawing-a-point-in-an-imageview/"/>
+    <updated>2013-09-06T15:35:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/06/drawing-a-point-in-an-imageview</id>
+    <content type="html"><![CDATA[<p>Suppose you have an image that is of size 50 px by 50 px. This image will be presented in an
+imageview. Now if you wanted to draw a point at exactly (30 px, 30 px) in the image coordinate space,
+how would you go about it in Android.</p>
+
+<p>First of all, let&rsquo;s talk about challenges posed by the Android framework. The size of the imageview
+may not be the same size and/or aspect as the image. Also, pre-scaling of the bitmap may be done since the
+density of the screen may be higher than what was assumed for the bitmap image. <strong>Headache</strong> is all.</p>
+
+<p>My solution:</p>
+
+<blockquote><p>In onDraw() method in a subclassed ImageView</p></blockquote>
+
+<pre><code>Matrix mat = getImageMatrix();
+
+float[] pts = {30, 30}; //in {x0, y0, x1, y1,...} format
+
+mat.mapPts(pts);
+
+float mappedX = pts[0];
+float mappedY = pts[1];
+</code></pre>
+
+<p>Now <em>mappedX</em> and <em>mappedY</em> will be the new coordinates for (30px, 30px) in the <em>new</em> image coordinate space.</p>
+
+<p>Cheers!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android Action Bar Tab - How to + ViewPager Integration]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration/"/>
+    <updated>2013-09-03T15:07:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/03/android-action-bar-tab-how-to-plus-viewpager-integration</id>
+    <content type="html"><![CDATA[<p>Now tabs are just UI pieces. It can be added by interacting with three components
+1. ActionBar.TabListener
+2. ActionBar itself
+3. ActionBar.newTab() &hellip;. okay this is more like a method, I concede.</p>
+
+<p>The implementation patterns are as such:</p>
+
+<p>in <code>onCreate(Bundle savedInstanceState)</code></p>
+
+<pre><code>final ActionBar actionBar = getActionBar();
+
+//set the navigation mode of actionbar to
+actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
+
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+
+    }
+
+}
+
+actionBar.addTab(actionBar.newTab().setText("Tab1").setTabListener(tabListener));
+</code></pre>
+
+<p>For more tabs, add in more <code>addTab</code> function calls for ActionBar.</p>
+
+<h2>Relationships</h2>
+
+<blockquote><p>ActionBar is set to NAVIGATION_MODE_TABS and has
+ActionBar.Tabs whom in turns are associated with TabListerner.</p></blockquote>
+
+<h2>Viewpager Integration</h2>
+
+<p>In my last <a href="http://mipsmonsta.github.io//github/blog/2013/09/03/using-the-viewpager-essence/">post</a>, we talked about viewpager.
+If you read it up, you will see that there is no UI to select the page to show. We can use the
+tabs to achieve this.</p>
+
+<p>We just have to modify the TabListerner code above as follows:</p>
+
+<pre><code>...
+//prepare a tab listener
+ActionBar.TabListerner tabListerner = new ActionBar.TabListener(){
+
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft)
+    {
+        mViewPager.setCurrentItem(tab.getPosition());
+    }
+...
+</code></pre>
+
+<p><code>setCurrentItem</code> accepts <code>int position</code> as inputs which the tab offers. Almost like a match made in
+heaven or they are simply meant to be used together to create great apps.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using the ViewPager - Essence]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/03/using-the-viewpager-essence/"/>
+    <updated>2013-09-03T13:59:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/03/using-the-viewpager-essence</id>
+    <content type="html"><![CDATA[<p>For one of the project that I am currently working on, I plan to use the viewpager to swipe to
+&ldquo;pages&rdquo; of fragment. The key steps are planned below for implementation.</p>
+
+<h2>Set-up Host Activity&rsquo;s Layout</h2>
+
+<p>The layout file needs to include a xml viewpager. Notice this is available in the support library.
+The viewpager is also occupying the full screen except for the status bar chrome.</p>
+
+<pre><code>&lt;android.support.v4.view.ViewPager
+ android:id="@+id/viewpager"
+ android:layout_width="fill_parent"
+ android:layout_height="fill_parent" /&gt;
+</code></pre>
+
+<h2>Changes to Host Activity</h2>
+
+<p>The host activity would need to be inherited from FragmentActivity (I take it because of the use
+of the support library).</p>
+
+<p>This activity will also need to hold on to an instance of a subclassed PageAdapter. In the
+<code>onCreate(Bundle savedInstanceState)</code>, we can find the viewpager from the activity&rsquo;s layout and
+then set the adapter to the instance of PageAdapter.</p>
+
+<pre><code>...
+ViewPager pager = (ViewPager)findViewById(R.id.viewpager);
+List&lt;Fragment&gt; fragments = getFragments();
+pageAdapter = new SubClassdPageAdapter(getSupportFragmentManager(), fragments);
+pager.setAdapter(pageAdapter);
+</code></pre>
+
+<p><a href id="getFragments"></a>
+Notice the instantization of the pageAdapter included steps to feed it the supportFragmentManager and a
+list of fragments that each will be the &ldquo;page&rdquo;.</p>
+
+<h2>Declaration of the Subclassed Page Adapter</h2>
+
+<pre><code>class SubClassedPageAdapter extends FragmentPagerAdapter {
+
+    private List&lt;Fragment&gt; fragments;
+
+    public SubClassedPageAdapter(FragmentManager fm, List&lt;Fragment&gt; fragments)
+    {
+        super(fm);
+        this.fragments = fragments;
+    }
+
+    @Override
+    public Fragment getItem(int position)
+    {
+        return this.fragments.get(position);
+    }
+
+    public int getCount()
+    {
+        return fragments.size();
+    }
+
+}
+</code></pre>
+
+<p>The focus to note is the contructor which takes in the support fragment manager and a list of fragments.
+The other things to note are the <code>getItem(int position)</code> and <code>getCount()</code> since these are abstract
+to begin with. The job of the PagerAdapter is just to act as the intermediary to return the
+right fragments to the viewpager.</p>
+
+<h2>&ldquo;Flow&rdquo; of fragments</h2>
+
+<p>ViewPager &lt;&mdash;&mdash;(right fragment)&mdash;&mdash;PageAdapter&lt;&mdash;&mdash;-List of Fragments</p>
+
+<h2>Relationships</h2>
+
+<p>+ViewPager has an adapter of PageAdapter.
++PageAdapter contains a list of fragments.</p>
+
+<h2>Getting the list of Fragments</h2>
+
+<p>Recall the <code>getFragments()</code> <a href="#getFragments">function</a> call in the main activity in <code>onCreate</code>?
+We just need to implement it to have our working viewpager workflow.</p>
+
+<pre><code>...in main activity's code
+List&lt;Fragment&gt; getFragments()
+{
+    List&lt;Fragment&gt; result = new ArrayList&lt;Fragment&gt;();
+
+    Fragment frag1 = Fragment.newInstance();
+    result.add(frag1);
+    Fragment frag2 = Fragment.newInstance();
+    result.add(frag2);
+}
+</code></pre>
+
+<p>The final bit is to integrate with actionBar tabs. But I should leave it as part of the next post to talk about tabs.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ObjectAnimator and their use]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/02/objectanimator-and-their-use/"/>
+    <updated>2013-09-02T12:44:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/02/objectanimator-and-their-use</id>
+    <content type="html"><![CDATA[<h2>History</h2>
+
+<p>Object animator was added in Android API 11 (Honeycomb i.e. 3.0). This class allows <em>targeting</em> objects (views or fragmentInstance.getView())
+and animating their properties.</p>
+
+<h2>Use</h2>
+
+<pre><code>ObjectAnimator movingFragmentAnimator = ObjectAnimator.
+            ofPropertyValuesHolder(&lt;target&gt;, &lt;PropertyValuesHolder value&gt;, &lt;PropertyValuesHolder value&gt;, ...);
+</code></pre>
+
+<p>Here you can see a static constructor that takes in <em>list</em> of PropertyValuesHolder values all
+targeting the same view object.</p>
+
+<p><strong>OR</strong></p>
+
+<pre><code>ObjectAnimator darkHoverViewAnimator = ObjectAnimator.
+            ofFloat(mDarkHoverView, "alpha", 0.0f, 0.5f);
+</code></pre>
+
+<p>Only one property of the target is to be animated here.</p>
+
+<h2>PropertyValuesHolder</h2>
+
+<pre><code>PropertyValuesHolder rotateX =  PropertyValuesHolder.ofFloat("rotationX", 40f);
+</code></pre>
+
+<p>Here you can see that <strong>rotationX</strong> is the property value to change and &ldquo;40f&rdquo; is the degree to turn about the x-axis.</p>
+
+<h2>Tweaking Object Animator further <a id="tweaks"></a></h2>
+
+<p>Duration of the animation can be changed:</p>
+
+<pre><code>darkHoverViewAnimator.setDuration(long millisec)
+</code></pre>
+
+<p><strong>Default</strong> duration is 300 msec according to documentation.</p>
+
+<p>How about starting animation with a delay:</p>
+
+<pre><code>darkHoverViewAnimator.startDelay(long millisec)
+</code></pre>
+
+<h2>Starting animation of an Object animator</h2>
+
+<pre><code>darkHoverViewAnimator.start()
+</code></pre>
+
+<h2>Starting animation of multiple Object Animators</h2>
+
+<p>We achieve this by using a <em>AnimatorSet</em> instance instead of calling individual objectanimator&rsquo;s start().</p>
+
+<pre><code>  AnimatorSet s = new AnimatorSet();
+  s.playTogether(movingFragmentAnimator, darkHoverViewAnimator, movingFragmentRotator);
+  s.addListener(listener); 
+  s.start();
+</code></pre>
+
+<p>The animatorset allows the simultaneous playback of all animator&rsquo;s animation. When each object(target) starts their animation
+depends of course on whether their startDelay property has been <a href="#tweaks">set</a>.</p>
+
+<h2>Chaining even more animations to start after</h2>
+
+<p>Notice the line <code>s.addListener(listener)</code>? The class of the listener in this case is <strong>Animator.AnimatorListener</strong>.
+An instance of this AnimatorListener allows the overriding of four methods that corresponds to
+specific instance of the animator&rsquo;s lifecycle.</p>
+
+<pre><code>    AnimatorListener listener = new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator arg0) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.slide_fragment_in, 0, 0,
+                        R.animator.slide_fragment_out);
+                transaction.add(R.id.move_to_back_container, mTextFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        };
+</code></pre>
+
+<p>We are only overriding the <em>onAnimationEnd</em>. There are other lifecycle events that we can also tracked:</p>
+
+<ul>
+<li>onAnimationCancel</li>
+<li>onAnimationStart</li>
+<li>onAnimationRepeat</li>
+</ul>
+
+
+<p>See <a href="http://developer.android.com/reference/android/animation/Animator.AnimatorListener.html">documentation for AnimatorListener to find out more</a>.</p>
+
+<p>In the above code, we will add a fragment in at the end of AnimatorSet&rsquo;s animation. Interestingly,
+doc for FragmentTransaction says</p>
+
+<blockquote><p>abstract FragmentTransaction  <br/>
+setCustomAnimations(int enter, int exit, int popEnter, int popExit)
+<em>Desc:</em> Set specific animation resources to run for the fragments that are entering and exiting in this transaction.</p></blockquote>
+
+<p>This means that mTextFragment will &ldquo;enter&rdquo; and &ldquo;pop out&rdquo; with the specified animation resource ids.
+I suspect &ldquo;popEnter&rdquo; refers to the animation for the fragment beneath mTextFragment when it pops up.
+We of course set this animation resource id to <em>&ldquo;zero&rdquo;</em>, indicating no animation at all.</p>
+
+<h2>Specifying Object Animator in XML in lieu of code</h2>
+
+<pre><code>&lt;objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:valueFrom="0"
+    android:valueTo="@dimen/slide_up_down_fraction"
+    android:propertyName="yFraction"
+    android:valueType="floatType"
+    android:duration="@integer/slide_up_down_duration"&gt;
+&lt;/objectAnimator&gt;
+</code></pre>
+
+<p>The xml objectAnimator file will go under the &ldquo;animator&rdquo; folder. It&rsquo;s resource identifier will be
+R.animator.&lt;name_of_file>.</p>
+
+<h2>Summary</h2>
+
+<p>We saw how to use the following objects together or in partial isolation to achieve useful animations:
++ PropertyValuesHolder
++ ObjectAnimator
++ AnimatorSet
++ AnimatorListener.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git Simple Guide]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/02/git-simple-guide/"/>
+    <updated>2013-09-02T12:01:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/02/git-simple-guide</id>
+    <content type="html"><![CDATA[<p>As the title of this post says: <a href="http://rogerdudler.github.io/git-guide/">Simple Guide to Git</a>.
+Good reference in a visually beautiful way.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Image DPI and Android]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/02/image-dpi-and-android/"/>
+    <updated>2013-09-02T10:22:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/02/image-dpi-and-android</id>
+    <content type="html"><![CDATA[<p>Android developer documents states that the baseline screen density is taken to be 160 pixels (px) per
+inch. If your device has 240 px per inch (high density), a image of size 100px by 100px will appear larger on the baseline
+baseline screen than the high density screen. Specially, the image will be 0.625 of an inch on baseline screen compared to
+0.416 inch on the higher density screen.</p>
+
+<p>Then how does <em>image dpi</em> relates to how Android serves up the image. The answer as I have researched is <strong>NOTHING</strong>.
+Turns out the image dpi has no bearing on how large the images are displayed on the computer or cellphone screen.
+It does however specify how large these images are printed on paper. For example, two images of 100px by 100px but at different
+dpi of 200 dpi and 100 dpi will look the same size on the same cellphone screen. However, when printed,
+the one with the higher dpi will print as half the dimension as the other.</p>
+
+<p>You can refer to this <a href="http://www.scantips.com/no72dpi.html">scantips</a> for more on image dpi.</p>
+
+<p>For us Android developers, we just have to stop worrying about image dpi. If only we
+can do the same for screen density&hellip;lol.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Loading Screen Activity (AKA) SplashScreen for Android]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android/"/>
+    <updated>2013-08-29T17:16:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/29/loading-screen-activity-aka-splashscreen-for-android</id>
+    <content type="html"><![CDATA[<p>I was dabbling with implementing <em>In App Purchase (IAB)</em>  for my Android app. According to Google documentation,
+it would be best to change the UI instantly once the purchase was successful. However, this is not possible
+for my app unless after a restart.</p>
+
+<p>The documentation also advised to do a server query for the purchased item status every so often, preferably
+everytime the app is started.</p>
+
+<p>How I implemented my part of my app&rsquo;s IAB workflow is as such:</p>
+
+<ol>
+<li>User makes the purchase, but the UI of the app will only update after the next app&rsquo;s start up.</li>
+<li>If the User download the app on his other devices for the first time, app will need to check for his
+purchases before going into the main UI.</li>
+</ol>
+
+
+<p>The above use cases led me to implement a splash screen activity that will always run before my main UI activity.
+However I have some optimizing to shorten the on screen time of this splash screen. After all, who likes to wait?</p>
+
+<p>Some of the design choices to cut waiting time are:</p>
+
+<ul>
+<li>When the purchase transaction first came through, I would set a flag in the app to note this event.</li>
+<li>Then I forced the app to shutdown and prompt the user to <em>restart</em> the app with a Toast message.</li>
+<li>At the next start-up, the splash screen <code>onCreate()</code> code will check for the presence of the flag.
+
+<ul>
+<li>If the flag exists, the splashscreen quickly starts the main UI activity.</li>
+<li>If not, this start-up could be the first start up on a device that newly install the app.
+
+<ul>
+<li>So the splashscreen activity will check with Google Play Services for any purchases. In this case
+the splash screen may dwell longer on the screen becauses of server calls.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>To make the splash screen as unintrusive as possible, I also styled the activity using the
+<code>android:theme="@android:style/Theme.Dialog</code> in the application manifest.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CSS Jargons - Span Element vs Block Element]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/28/css-jargons-span-element-vs-block-element/"/>
+    <updated>2013-08-28T19:48:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/28/css-jargons-span-element-vs-block-element</id>
+    <content type="html"><![CDATA[<p>It finally <em>dawn</em> on me that my understanding of &ldquo;span&rdquo; in the context of CSS or markdown has
+nothing to do with &ldquo;length&rdquo;. Rather it means that the &ldquo;span&rdquo; element is supposed to be inline with
+other elements. The opposite of a span element is a block element, which is like an element that wants
+to stand alone.</p>
+
+<p>Now I finally understand the difference between <strong>code span</strong> and <strong>code block</strong> while reading the
+<a href="http://daringfireball.net/projects/markdown/syntax">markdown guide</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Simple JSON Array to string]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/28/simple-json-array-to-string/"/>
+    <updated>2013-08-28T19:22:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/28/simple-json-array-to-string</id>
+    <content type="html"><![CDATA[<p>Supposed you have the following json array</p>
+
+<p><code>{&ldquo;apple&rdquo;:&ldquo;twelve&rdquo;, &ldquo;banana&rdquo;: &ldquo;three&rdquo;, &ldquo;oranges&rdquo;: &ldquo;five&rdquo;}</code>, how do you extract the value
+of &ldquo;oranges&rdquo; i.e. &ldquo;five&rdquo;?</p>
+
+<p>As simple as this sounds, this took me awhile to figure using <a href="http://code.google.com/p/google-gson/">GSON</a>.</p>
+
+<pre><code>JsonElement jelement = new JsonParser().parse(purchaseInfo);                
+result = jelement.getAsJsonObject().get("oranges").getAsString();
+</code></pre>
+
+<p>Now <em>result</em> will contains the string &ldquo;five&rdquo;. That was easy! The above was used in my Google
+App Engine app.</p>
+
+<p>In English, this would be: &ldquo;the array is a json object with the json object of property &#8220;oranges&rdquo;.
+Once I have the &ldquo;orange&rdquo; object, give me it&rsquo;s string value which is &ldquo;five&rdquo;.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Request Maker to Post to Google App Engine]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine/"/>
+    <updated>2013-08-28T16:07:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/28/using-request-maker-to-post-to-google-app-engine</id>
+    <content type="html"><![CDATA[<p><a href="http://www.requestmaker.com">Request Maker</a> allows you to send GET/POST/GET/PUT/DELETE request to any web url. I was particularly
+interested in its ability to send Post messages to my Google App Engine app.</p>
+
+<p>For example, if I want to send foo=bar&amp;mad=man as the request body, I just have to typed
+<code>foo=bar&amp;mad=man</code> verbertim into the Request Data form input at request maker.</p>
+
+<p>However, I had difficulty extracting these key-values at Google App Engine using
+the <code>request.getParameter(&ldquo;foo&rdquo;)</code> code.</p>
+
+<p>Turns out for it all to work, you need to set the request header&rsquo;s content-type to</p>
+
+<blockquote><p>application/x-www-form-urlencoded; charset=utf-8</p></blockquote>
+
+<p>That helped me and I hope it helps you.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Stock Market Terms Part 1]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/26/stock-market-terms-part-1/"/>
+    <updated>2013-08-26T15:13:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/26/stock-market-terms-part-1</id>
+    <content type="html"><![CDATA[<h2>Trying to get a handle on some stock market terms&hellip; here we go</h2>
+
+<ul>
+<li><p>Outstanding shares of its stock, that is shares held by the public outside of its control</p></li>
+<li><p>EBITDA is Earnings Before Interest, Taxes, Depreciation and Amortization and measures
+operating performance of a company before accounting conventions and non-operational
+charges (such as taxes and interest)</p>
+
+<ul>
+<li>Interest Coverage
+
+<ul>
+<li>Gives a good idea if a company is having trouble paying off its
+  interest charges on its debt
+
+<ul>
+<li>Formula is EBITDA / Interest Expense = Interest Coverage</li>
+<li>1.5 times to be subjectively deemed healthy</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Growth stock has potential for continued growth</p></li>
+<li><p>Value stock are underpriced by the market and have potential for an increase
+when the market corrects the price</p></li>
+<li><p>Return on Equity (ROE)</p>
+
+<ul>
+<li>Measure of how efficiently a company uses its assets to produce Earnings
+
+<ul>
+<li>is Net Income divided by Book Value
+
+<ul>
+<li>Flaws:
+
+<ul>
+<li>when companies lowers Book Value by taking on debt</li>
+</ul>
+</li>
+<li>accounting sleight of hand that reduces book value
+
+<ul>
+<li>write-downs
+
+<ul>
+<li>stock buy backs</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Book Value = <strong>Assets &ndash; Liabilities</strong></p>
+
+<ul>
+<li>How much left if a company shutters after selling all assets and settling all debts</li>
+</ul>
+</li>
+<li><p>PEG = P/E /(projected growth in earnings)</p>
+
+<ul>
+<li>For example, a stock with a P/E of 30 and projected earning growth next year of 15% would have a PEG of 2 (30 / 15 = 2).</li>
+<li>its about y-o-y earning Growth</li>
+<li>relies on projections, which may not always be accurate</li>
+</ul>
+</li>
+<li><p>Price to Sale = Market Cap / Revenue or Stock Price / Sales Price Per Share</p>
+
+<ul>
+<li>Useful for evaluating youung companies without historical earnings</li>
+<li>Lower the better</li>
+</ul>
+</li>
+<li><p>Dividend Payout Ratio = Dividents Per Share / Earning per Shares</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dog Write App - Possible Enhancements]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/23/dog-write-app-possible-enhancements/"/>
+    <updated>2013-08-23T12:27:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/23/dog-write-app-possible-enhancements</id>
+    <content type="html"><![CDATA[<p>I am the developer for a small note taking app called <strong>Dog Writer</strong>. It&rsquo;s allows you to write your thoughts in plain text and sync them to Dropbox .</p>
+
+<p>Now I never thought that anything would be better than text to allow focused writing. <strong>UNTIL</strong> today. It all started with a little dabbling with Octopress. Hail as the blog engine for hackers, it let users type out their blogs in Markdown.</p>
+
+<blockquote><p>Markdown is the new Rich Text format (RTF) equivalent. It allows the writer to effortlessly format their writing without using mouse or ugly TAGS.</p></blockquote>
+
+<p>Very tempted to integrate this function into Dog Writer. It could well be the killer app. Good use of my time?</p>
+
+<p><strong>Update</strong>: Manage to integrate in a markdown preview window.</p>
+
+<p>Other possible enhancements:</p>
+
+<ul>
+<li>save as md</li>
+<li>ads removal</li>
+<li>syntax help</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Little People]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/22/little-people/"/>
+    <updated>2013-08-22T14:29:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/22/little-people</id>
+    <content type="html"><![CDATA[<p>In my mother-tongue language, <strong>&ldquo;Little People&rdquo;</strong> is pronounced as &ldquo;xiao ren&rdquo;. The meaning is small people
+.</p>
+
+<blockquote><p>It refers to people whom you consider offensive,
+or as some sort of a foil to you. Almost like a nemesis, except that he or she will never
+deserves your respect because of their conniving ways.</p></blockquote>
+
+<h2>My own tests for &ldquo;Little People&rdquo; are when they:</h2>
+
+<ul>
+<li>dig information to their advantage without regards to your feeling</li>
+<li>talks only about themselves</li>
+<li>complain about work being stressful but still have free time to loiter / take a cigarette break</li>
+<li>do things that hurts friendship</li>
+<li>push work around even when it&rsquo;s clearly within their job scope</li>
+</ul>
+
+
+<h2>So how do ancient chinese handles this?</h2>
+
+<p>They will paste a piece of paper that is shaped like a man or woman onto the back of their
+sandal. The name of their foil will also be written on the paper. Next as you may have
+guessed is to smack the sandal with the figurine paper hard on the ground.</p>
+
+<p>The effect on the foil? Usually negligible. Folklore goes that some may complain of sneezing, which
+they will naturally conclude that someone is scolding them behind their backs. But to the
+person inflicting the &ldquo;damage&rdquo;, psychological bliss ensues.</p>
+
+<p>How does your culture deal with such people?</p>
+
+<p>Now, why would I suddenly broached this subject. Maybe because someone <em>passed</em> my tests of a
+&ldquo;Little People&rdquo;. Haha.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Twitter User Name For Octopress]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/22/twitter-user-name-for-octopress/"/>
+    <updated>2013-08-22T13:32:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/22/twitter-user-name-for-octopress</id>
+    <content type="html"><![CDATA[<p>In the _config.yml file, you can link to twitter under <em>Third Party Setting</em>.
+However I had difficulty when calling rake generate. The latter will complain that the
+token on line 71 is somehow causing parsing errors.</p>
+
+<p>How I solve it is to put my username for twitter between quotes.</p>
+
+<p><code>
+twitter_user: &ldquo;johndoe"<br/>
+twitter_tweet_button: true</p>
+
+<p></code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Be All]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/08/22/the-be-all/"/>
+    <updated>2013-08-22T12:46:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/08/22/the-be-all</id>
+    <content type="html"><![CDATA[<h2>First Post</h2>
+
+<p>What should a first post talks about. Maybe why I am blogging? The short answers is that I was toying with launch a blog using a ruby blogging engine. The long answers is maybe I felt that I need to have a better reflections of my life thus far.</p>
+
+<p>What ever the reason, here is the <em>first post</em>. The one that started it all.</p>
+
+<p>My resolution for my future posts:</p>
+
+<blockquote><ul>
+<li>Informative or <em>value adding</em>.</li>
+<li>Fun.</li>
+<li>True to the heart.</li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+</feed>

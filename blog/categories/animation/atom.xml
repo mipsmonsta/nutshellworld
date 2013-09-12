@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Animation | Nutshell World]]></title>
+  <link href="http://mipsmonsta.github.io//github/blog/categories/animation/atom.xml" rel="self"/>
+  <link href="http://mipsmonsta.github.io//github/"/>
+  <updated>2013-09-12T15:50:21+08:00</updated>
+  <id>http://mipsmonsta.github.io//github/</id>
+  <author>
+    <name><![CDATA[TYJ]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ObjectAnimator and their use]]></title>
+    <link href="http://mipsmonsta.github.io//github/blog/2013/09/02/objectanimator-and-their-use/"/>
+    <updated>2013-09-02T12:44:00+08:00</updated>
+    <id>http://mipsmonsta.github.io//github/blog/2013/09/02/objectanimator-and-their-use</id>
+    <content type="html"><![CDATA[<h2>History</h2>
+
+<p>Object animator was added in Android API 11 (Honeycomb i.e. 3.0). This class allows <em>targeting</em> objects (views or fragmentInstance.getView())
+and animating their properties.</p>
+
+<h2>Use</h2>
+
+<pre><code>ObjectAnimator movingFragmentAnimator = ObjectAnimator.
+            ofPropertyValuesHolder(&lt;target&gt;, &lt;PropertyValuesHolder value&gt;, &lt;PropertyValuesHolder value&gt;, ...);
+</code></pre>
+
+<p>Here you can see a static constructor that takes in <em>list</em> of PropertyValuesHolder values all
+targeting the same view object.</p>
+
+<p><strong>OR</strong></p>
+
+<pre><code>ObjectAnimator darkHoverViewAnimator = ObjectAnimator.
+            ofFloat(mDarkHoverView, "alpha", 0.0f, 0.5f);
+</code></pre>
+
+<p>Only one property of the target is to be animated here.</p>
+
+<h2>PropertyValuesHolder</h2>
+
+<pre><code>PropertyValuesHolder rotateX =  PropertyValuesHolder.ofFloat("rotationX", 40f);
+</code></pre>
+
+<p>Here you can see that <strong>rotationX</strong> is the property value to change and &ldquo;40f&rdquo; is the degree to turn about the x-axis.</p>
+
+<h2>Tweaking Object Animator further <a id="tweaks"></a></h2>
+
+<p>Duration of the animation can be changed:</p>
+
+<pre><code>darkHoverViewAnimator.setDuration(long millisec)
+</code></pre>
+
+<p><strong>Default</strong> duration is 300 msec according to documentation.</p>
+
+<p>How about starting animation with a delay:</p>
+
+<pre><code>darkHoverViewAnimator.startDelay(long millisec)
+</code></pre>
+
+<h2>Starting animation of an Object animator</h2>
+
+<pre><code>darkHoverViewAnimator.start()
+</code></pre>
+
+<h2>Starting animation of multiple Object Animators</h2>
+
+<p>We achieve this by using a <em>AnimatorSet</em> instance instead of calling individual objectanimator&rsquo;s start().</p>
+
+<pre><code>  AnimatorSet s = new AnimatorSet();
+  s.playTogether(movingFragmentAnimator, darkHoverViewAnimator, movingFragmentRotator);
+  s.addListener(listener); 
+  s.start();
+</code></pre>
+
+<p>The animatorset allows the simultaneous playback of all animator&rsquo;s animation. When each object(target) starts their animation
+depends of course on whether their startDelay property has been <a href="#tweaks">set</a>.</p>
+
+<h2>Chaining even more animations to start after</h2>
+
+<p>Notice the line <code>s.addListener(listener)</code>? The class of the listener in this case is <strong>Animator.AnimatorListener</strong>.
+An instance of this AnimatorListener allows the overriding of four methods that corresponds to
+specific instance of the animator&rsquo;s lifecycle.</p>
+
+<pre><code>    AnimatorListener listener = new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator arg0) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setCustomAnimations(R.animator.slide_fragment_in, 0, 0,
+                        R.animator.slide_fragment_out);
+                transaction.add(R.id.move_to_back_container, mTextFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        };
+</code></pre>
+
+<p>We are only overriding the <em>onAnimationEnd</em>. There are other lifecycle events that we can also tracked:</p>
+
+<ul>
+<li>onAnimationCancel</li>
+<li>onAnimationStart</li>
+<li>onAnimationRepeat</li>
+</ul>
+
+
+<p>See <a href="http://developer.android.com/reference/android/animation/Animator.AnimatorListener.html">documentation for AnimatorListener to find out more</a>.</p>
+
+<p>In the above code, we will add a fragment in at the end of AnimatorSet&rsquo;s animation. Interestingly,
+doc for FragmentTransaction says</p>
+
+<blockquote><p>abstract FragmentTransaction  <br/>
+setCustomAnimations(int enter, int exit, int popEnter, int popExit)
+<em>Desc:</em> Set specific animation resources to run for the fragments that are entering and exiting in this transaction.</p></blockquote>
+
+<p>This means that mTextFragment will &ldquo;enter&rdquo; and &ldquo;pop out&rdquo; with the specified animation resource ids.
+I suspect &ldquo;popEnter&rdquo; refers to the animation for the fragment beneath mTextFragment when it pops up.
+We of course set this animation resource id to <em>&ldquo;zero&rdquo;</em>, indicating no animation at all.</p>
+
+<h2>Specifying Object Animator in XML in lieu of code</h2>
+
+<pre><code>&lt;objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:valueFrom="0"
+    android:valueTo="@dimen/slide_up_down_fraction"
+    android:propertyName="yFraction"
+    android:valueType="floatType"
+    android:duration="@integer/slide_up_down_duration"&gt;
+&lt;/objectAnimator&gt;
+</code></pre>
+
+<p>The xml objectAnimator file will go under the &ldquo;animator&rdquo; folder. It&rsquo;s resource identifier will be
+R.animator.&lt;name_of_file>.</p>
+
+<h2>Summary</h2>
+
+<p>We saw how to use the following objects together or in partial isolation to achieve useful animations:
++ PropertyValuesHolder
++ ObjectAnimator
++ AnimatorSet
++ AnimatorListener.</p>
+]]></content>
+  </entry>
+  
+</feed>
